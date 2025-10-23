@@ -16,6 +16,7 @@ module.exports = class Home {
     Home.fetchAll((registeredHomes) => {
       registeredHomes.push(this);
       const homeDataPath = path.join(rootDir, "data", "homes.json");
+      console.log(registeredHomes);
       fs.writeFile(homeDataPath, JSON.stringify(registeredHomes), (error) => {
         console.log("File Writing Concluded", error);
       });
@@ -28,7 +29,7 @@ module.exports = class Home {
       if(err){
         return callback([]);
       }
-      else return callback(JSON.parse(data));
+      return callback(JSON.parse(data));
     });
   }
 };
