@@ -1,4 +1,5 @@
 const Home = require("../models/home");
+const Favourites = require("../models/favourites");
 
 exports.getIndex = (req, res, next) => {
   Home.fetchAll((registeredHomes) =>
@@ -55,3 +56,11 @@ exports.getHomesDetails = (req,res,next)=>{
     }
   });
 }
+
+exports.postFavouriteList = (req,res,next)=>{
+  console.log(req.body);
+  Favourites.addToFavourites(req.body.homeId,(msg)=>{
+    console.log(msg);
+    res.redirect("/favourites");
+  });
+};
