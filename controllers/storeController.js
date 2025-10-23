@@ -48,10 +48,10 @@ exports.getHomesDetails = (req,res,next)=>{
     }
     else{
       res.render("store/home-detail",{
-      home: home,
-      pageTitle: "Home Details",
-      currentPage: "Home",
-    });
+        home: home,
+        pageTitle: "Home Details",
+        currentPage: "Home",
+      });
     }
   });
 }
