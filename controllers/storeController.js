@@ -27,12 +27,23 @@ exports.getBookings = (req, res, next) => {
   })
 };
 
-exports.getFavouriteList = (req, res, next) => {
-  Home.fetchAll((registeredHomes) =>
+exports.getFavouriteList = (req,res,next) => {
+  Home.fetchAll((registeredHomes)=>{
     res.render("store/favourite-list", {
       registeredHomes: registeredHomes,
       pageTitle: "My Favourites",
       currentPage: "favourites",
-    })
-  );
-};
+    });
+  });
+}
+
+exports.getHomesDetails = (req,res,next)=>{
+  const homeId = req.params.homeId;
+  Home.findbyId(homeId,(home)=>{
+    res.render("store/home-detail",{
+      home: home,
+      pageTitle: "Home Details",
+      currentPage: "Home",
+    });
+  });
+}
