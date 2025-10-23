@@ -28,16 +28,6 @@ exports.getBookings = (req, res, next) => {
   })
 };
 
-exports.getFavouriteList = (req,res,next) => {
-  Home.fetchAll((registeredHomes)=>{
-    res.render("store/favourite-list", {
-      registeredHomes: registeredHomes,
-      pageTitle: "My Favourites",
-      currentPage: "favourites",
-    });
-  });
-}
-
 exports.getHomesDetails = (req,res,next)=>{
   const homeId = req.params.homeId;
   Home.findbyId(homeId,(home)=>{
@@ -54,6 +44,18 @@ exports.getHomesDetails = (req,res,next)=>{
         currentPage: "Home",
       });
     }
+  });
+}
+exports.getFavouriteList = (req,res,next)=>{
+  Favourites.getAllFavs((favourites)=>{
+    Home.fetchAll((registeredHomes)=>{
+      const favHomes = registeredHomes.filter(h=>favourites.some(fv=>fv.homeId==h.id));
+      res.render("store/favourite-list", {
+        favHomes: favHomes,
+        pageTitle: "My Favourites",
+        currentPage: "favourites",
+      });
+    });
   });
 }
 
