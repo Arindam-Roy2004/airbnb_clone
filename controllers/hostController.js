@@ -37,8 +37,8 @@ exports.getEditHome = (req, res, next) => {
 
   Home.findbyId(homeId, (home) => {
     if (!home) {
-      console.log("Home not found fro editing");
-      res.redirect("/host/edit-home");
+      console.log("Home not found for editing");
+      res.redirect("/host/host-home-list");
     }
     else {
       console.log("Home found for editing", home);
@@ -62,4 +62,9 @@ exports.postEditHome = (req, res, next) => {
   home.save();
 
   return res.redirect("/host/host-home-list");
+}
+
+exports.postDeletHome = (req,res,next)=>{
+
+  const homeId = req.params.homeId;
 }

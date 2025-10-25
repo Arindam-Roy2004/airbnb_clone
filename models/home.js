@@ -18,7 +18,6 @@ module.exports = class Home {
     Home.fetchAll((registeredHomes) => {
       if (this.id) {
         const existingHomeIndex = registeredHomes.findIndex(h => h.id == this.id);
-        console.log(this);
         registeredHomes[existingHomeIndex] = this;
       }
       else {
@@ -44,6 +43,15 @@ module.exports = class Home {
     this.fetchAll((registeredHomes) => {
       const home = registeredHomes.find(h => h.id == id);
       callback(home);
+    });
+  }
+
+  static deleteById(id){
+    this.fetchAll((registeredHomes)=>{
+      const updatedHomes = registeredHomes.filter(h=>h.id!=id);
+      fs.writeFile(homeDataPath,JSON.stringify(updatedHomes),(err)=>{
+        console.log("Home Deleted",err);
+      })
     });
   }
 };
