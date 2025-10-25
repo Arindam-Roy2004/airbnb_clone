@@ -14,9 +14,17 @@ module.exports = class Home {
   }
 
   save() { // post add-home call this method
-    this.id = Math.random().toString();
+    //this.id = Math.random().toString();
     Home.fetchAll((registeredHomes) => {
-      registeredHomes.push(this);
+      if (this.id) {
+        const existingHomeIndex = registeredHomes.findIndex(h => h.id == this.id);
+        console.log(this);
+        registeredHomes[existingHomeIndex] = this;
+      }
+      else {
+        this.id = Math.random().toString();
+        registeredHomes.push(this);
+      }
       fs.writeFile(homeDataPath, JSON.stringify(registeredHomes), (error) => {
         console.log("File Writing Concluded", error);
       });
@@ -25,16 +33,16 @@ module.exports = class Home {
 
   static fetchAll(callback) { // read homes from homes.json
     fs.readFile(homeDataPath, (err, data) => {
-      if(err){
+      if (err) {
         return callback([]);
       }
       return callback(JSON.parse(data));
     });
   }
 
-  static findbyId(id,callback){
-    this.fetchAll((registeredHomes)=>{
-      const home = registeredHomes.find(h=>h.id==id);
+  static findbyId(id, callback) {
+    this.fetchAll((registeredHomes) => {
+      const home = registeredHomes.find(h => h.id == id);
       callback(home);
     });
   }

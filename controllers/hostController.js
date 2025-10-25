@@ -5,7 +5,8 @@ exports.getAddHome = (req, res, next) => {
     pageTitle: "Add Home to airbnb",
     currentPage: "addHome",
     editMode: false,
-    home: null
+    home: null,
+    homeId: null
   });
 };
 
@@ -50,4 +51,15 @@ exports.getEditHome = (req, res, next) => {
       });
     }
   })
+}
+
+exports.postEditHome = (req, res, next) => {
+  console.log(req.body);
+  const homeId = req.params.homeId;
+  const { houseName, price, location, rating, photoUrl } = req.body;
+  const home = new Home(houseName, price, location, rating, photoUrl);
+  home.id = homeId;
+  home.save();
+
+  return res.redirect("/host/host-home-list");
 }

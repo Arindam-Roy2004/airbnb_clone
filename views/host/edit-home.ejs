@@ -4,7 +4,7 @@
     <%- include('../partials/nav') %>
     <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
       <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%= editMode ? 'Edit' : 'Register' %> Your Home on AirBnB</h1>
-      <form action="/host/add-home" method="POST" class="max-w-md mx-auto">
+      <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST" class="max-w-md mx-auto">
         <input
           type="text"
           name="houseName"
