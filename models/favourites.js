@@ -39,4 +39,18 @@ module.exports = class Favourites {
       }
     });
   }
+  static deleteFromFavourites(homeId,callback){
+    this.getAllFavs((favouritesHomes)=>{
+      const updatedFavs = favouritesHomes.filter(fv=>fv.homeId!=homeId);
+      fs.writeFile(favDataPath,JSON.stringify(updatedFavs),
+      (err)=>{
+        if (err) {
+          console.log("Error deleting from favourites:", err);
+        } else {
+          console.log("Deleted from favourites successfully");
+        }
+        callback();
+      });
+    });
+  }
 };

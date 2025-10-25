@@ -62,13 +62,13 @@ exports.postEditHome = (req, res, next) => {
   home.save();
 
   return res.redirect("/host/host-home-list");
-}
+};
 
 exports.postDeletHome = (req,res,next)=>{
 
   const homeId = req.params.homeId;
 
-  Home.deleteById(homeId);
-
-  res.redirect("/host/host-home-list");
-}
+  Home.deleteById(homeId, () => {
+    res.redirect("/host/host-home-list");
+  });
+};
