@@ -4,6 +4,8 @@ exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
     currentPage: "addHome",
+    editMode: false,
+    home: null
   });
 };
 
@@ -27,3 +29,25 @@ exports.postAddHome = (req, res, next) => {
     currentPage: "homeAdded",
   });
 };
+
+exports.getEditHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  const editMode = req.query.editing === 'true';
+
+  Home.findbyId(homeId, (home) => {
+    if (!home) {
+      console.log("Home not found fro editing");
+      res.redirect("/host/edit-home");
+    }
+    else {
+      console.log("Home found for editing", home);
+      res.render("host/edit-home", {
+        pageTitle: "Edit Home",
+        currentPage: "editHome",
+        editMode: editMode,
+        homeId: homeId,
+        home: home
+      });
+    }
+  })
+}
