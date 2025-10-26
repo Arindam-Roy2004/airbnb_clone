@@ -2,23 +2,33 @@ const Home = require("../models/home");
 const Favourites = require("../models/favourites");
 
 exports.getIndex = (req, res, next) => {
-  Home.fetchAll((registeredHomes) =>
-    res.render("store/index", {
-      registeredHomes: registeredHomes,
-      pageTitle: "airbnb Home",
-      currentPage: "index",
+  Home.fetchAll()
+    .then(registeredHomes => {
+      res.render("store/index", {
+        registeredHomes: registeredHomes,
+        pageTitle: "airbnb Home",
+        currentPage: "index",
+      });
     })
-  );
+    .catch(err => {
+      console.log("Error fetching homes:", err);
+      res.status(500).send("Error loading homes");
+    });
 };
 
 exports.getHomes = (req, res, next) => {
-  Home.fetchAll((registeredHomes) =>
-    res.render("store/home-list", {
-      registeredHomes: registeredHomes,
-      pageTitle: "Homes List",
-      currentPage: "Home",
+  Home.fetchAll()
+    .then(registeredHomes => {
+      res.render("store/home-list", {
+        registeredHomes: registeredHomes,
+        pageTitle: "Homes List",
+        currentPage: "Home",
+      });
     })
-  );
+    .catch(err => {
+      console.log("Error fetching homes:", err);
+      res.status(500).send("Error loading homes");
+    });
 };
 
 exports.getBookings = (req, res, next) => {
@@ -28,28 +38,31 @@ exports.getBookings = (req, res, next) => {
   })
 };
 
-exports.getHomesDetails = (req,res,next)=>{
+exports.getHomesDetails = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.findbyId(homeId,(home)=>{
-    if(!home){
-      return res.status(404).render("store/404",{
-        pageTitle: "Home Not Found",
-        currentPage: "",
-      }); 
-    }
-    else{
-      res.render("store/home-detail",{
+  Home.findbyId(homeId)
+    .then(home => {
+      if (!home) {
+        return res.status(404).render("store/404", {
+          pageTitle: "Home Not Found",
+          currentPage: "",
+        });
+      }
+      res.render("store/home-detail", {
         home: home,
         pageTitle: "Home Details",
         currentPage: "Home",
       });
-    }
-  });
+    })
+    .catch(err => {
+      console.log("Error fetching home:", err);
+      res.status(500).send("Error loading home");
+    });
 }
 exports.getFavouriteList = (req,res,next)=>{
   Favourites.getAllFavs((favourites)=>{
     Home.fetchAll((registeredHomes)=>{
-      const favHomes = registeredHomes.filter(h=>favourites.some(fv=>fv.homeId==h.id));
+      const favHomes = registeredHomes.filter(h=>favourites.some(fv=>fv.homeId==h._id));
       res.render("store/favourite-list", {
         favHomes: favHomes,
         pageTitle: "My Favourites",

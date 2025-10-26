@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/homes.json
+data/favourites.json
+*.log
+.DS_Store
