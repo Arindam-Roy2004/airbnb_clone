@@ -92,8 +92,8 @@ exports.postFavouriteList = (req,res,next)=>{
 exports.postDeleteFavourite = (req,res,next)=>{
   const homeId = req.params.homeId;
   console.log(homeId);
-  Favourites.deleteFromFavourites()
-  .then(homeId,()=>{
+  Favourites.deleteFromFavourites(homeId)
+  .then(()=>{
     console.log("Deleted from favourites");
   })
   .catch(err=>{
