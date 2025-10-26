@@ -9,7 +9,15 @@ module.exports = class Favourites {
 
   save(){
     const db = getDb();
-    return db.collection('favourites').insertOne(this);
+    return db.collection('favourites')
+    .findOne({homeId:this.homeId})
+    .then(favHome=>{
+      if(!favHome){
+        return db.collection('favourites')
+        .insertOne(this);
+      }
+      return Promise.resolve();
+    });
   }
 
   static getAllFavs() {
