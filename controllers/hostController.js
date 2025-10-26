@@ -26,8 +26,8 @@ exports.getHostHomes = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { houseName, price, location, rating, photoUrl,description } = req.body;
-  const home = new Home(houseName, price, location, rating, photoUrl, description);
+  const { houseName, price, location, rating, photoUrl,description, id } = req.body;
+  const home = new Home(houseName, price, location, rating, photoUrl, description,id);
   home.save()
     .then(() => {
       console.log("Home added successfully");
@@ -69,8 +69,8 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   console.log(req.body);
-  const homeId = req.params.homeId;
-  const { houseName, price, location, rating, photoUrl, description } = req.body;
+  // const homeId = req.params.homeId;
+  const { houseName, price, location, rating, photoUrl, description, id } = req.body;
   const home = new Home(houseName, price, location, rating, photoUrl, description,id);
   
   home.save()

@@ -1,9 +1,4 @@
 // Core Modules
-const fs = require("fs");
-const path = require("path");
-const rootDir = require("../utils/pathUtil");
-const Favourites = require("./favourites");
-const homeDataPath = path.join(rootDir, "data", "homes.json");
 const {getDb} = require("../utils/databaseUtil");
 const {ObjectId,mongo} = require('mongodb');
 
@@ -20,8 +15,17 @@ module.exports = class Home {
 
   save() {
     const db = getDb();
-    
-    return db.collection('homes').insertOne(this);
+
+    if(this._id){ // update
+      return db.collection('homes').
+      updateOne(
+        {_id: new ObjectId(String(this._id))},
+        {$set : this}
+      )
+    }
+    else{ // insert
+      return db.collection('homes').insertOne(this);
+    }
   }
 
   static fetchAll() {
