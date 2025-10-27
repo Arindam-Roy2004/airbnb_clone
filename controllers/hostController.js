@@ -93,7 +93,7 @@ exports.postEditHome = (req, res, next) => {
   .catch((err)=>console.log("Error finding home for update:", err));
 };
 
-exports.postDeletHome = (req, res, next) => {
+exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
 
   Home.findByIdAndDelete(homeId)
