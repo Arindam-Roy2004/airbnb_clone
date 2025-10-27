@@ -1,5 +1,6 @@
 // Core Modules
-const {getDb} = require("../utils/databaseUtil");
+// const {getDb} = require("../utils/databaseUtil");
+/** 
 const {ObjectId,mongo} = require('mongodb');
 
 module.exports = class Favourites {
@@ -33,3 +34,19 @@ module.exports = class Favourites {
     .deleteOne({homeId:delHomeId});
   }
 };
+**/
+
+const mongoose = require('mongoose');
+
+const FavouriteSchema = mongoose.Schema(
+  {
+    homeId :{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Home',
+      required: true,
+      unique: true
+    }
+  }
+)
+
+module.exports = mongoose.model('Favourite', FavouriteSchema);

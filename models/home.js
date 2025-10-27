@@ -1,4 +1,5 @@
-// Core Modules
+
+/** 
 const {getDb} = require("../utils/databaseUtil");
 const {ObjectId,mongo} = require('mongodb');
 
@@ -28,14 +29,14 @@ module.exports = class Home {
     }
   }
 
-  static fetchAll() {
+  static find() {
     const db = getDb();
     return db.collection('homes')
       .find({})
       .toArray();
   }
 
-  static findbyId(id) {
+  static findById(id) {
     const db = getDb();
     return db.collection('homes')
     .find({_id: new ObjectId(String(id))})
@@ -48,3 +49,31 @@ module.exports = class Home {
     .deleteOne({_id: new ObjectId(String(id))});
   }
 };
+**/
+
+const mongoose = require('mongoose');
+
+const homeSchema = mongoose.Schema(
+  {
+    houseName: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    rating: {
+      type: Number,
+      required: true
+    },
+    photoUrl: String,
+    description: String
+  }
+)
+
+module.exports = mongoose.model('Home',homeSchema);
