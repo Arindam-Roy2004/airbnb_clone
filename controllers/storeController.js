@@ -61,17 +61,16 @@ exports.getHomesDetails = (req, res, next) => {
 }
 exports.getFavouriteList = (req,res,next)=>{
   Favourites.find()
-  .then(favourites=>{
-    Home.find().then(registeredHomes=>{
-      console.log(favourites,registeredHomes);
-      const favHomes = registeredHomes.filter(h=>favourites.some(fv=>fv.homeId.toString()===h._id.toString()));
-      res.render("store/favourite-list", {
-        favHomes: favHomes,
-        pageTitle: "My Favourites",
-        currentPage: "favourites",
-      });
+  .populate('homeId')
+  .then(fv=>{
+    console.log(fv);
+    const favHomes = fv.map(f=>f.homeId);
+    res.render("store/favourite-list", {
+      pageTitle: "My Favourites",
+      currentPage: "favourites",
+      favHomes: favHomes
     });
-  });
+  })
 }
 
 exports.postFavouriteList = (req,res,next)=>{
