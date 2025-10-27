@@ -1,7 +1,8 @@
 // Core Module
 require('dotenv').config();
 const path = require('path');
-const {mongoConnect} = require('./utils/databaseUtil');
+const mongoose = require('mongoose');
+// const {mongoConnect} = require('./utils/databaseUtil');
 
 // External Module
 const express = require('express');
@@ -26,9 +27,17 @@ app.use(express.static(path.join(rootDir, 'public')))
 app.use(errorsController.pageNotFound);
 
 const PORT = 3000;
-mongoConnect((client) => {
-  console.log(client);
-  app.listen(PORT, () => {
+// mongoConnect((client) => {
+//   console.log(client);
+//   app.listen(PORT, () => {
+//     console.log(`Server running on address http://localhost:${PORT}`);
+//   });
+// });
+
+mongoose.connect(process.env.MONGODB_URI)
+.then(()=>{
+  app.listen(PORT,()=>{
     console.log(`Server running on address http://localhost:${PORT}`);
-  });
-});
+  })
+})
+.catch(err => console.log(err));
