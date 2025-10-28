@@ -2,60 +2,50 @@
   <nav class="container mx-auto flex justify-between items-center">
     <ul class="flex space-x-4">
       <li>
-        <a
-          href="/"
-          class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >airbnb</a
-        >
+        <a href="/"
+          class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">airbnb</a>
       </li>
-      <li>
-        <a
-          href="/homes"
-          class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Homes-List</a
-        >
-      </li>
-      <li>
-        <a
-          href="/favourites"
-          class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Favourites</a
-        >
-      </li>
-      <li>
-        <a
-          href="/bookings"
-          class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Bookings</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/host-home-list"
-          class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Host Homes</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/add-home"
-          class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Add Home</a
-        >
-      </li>
+      <% if(isLoggedIn) { %>
+        <li>
+          <a href="/homes"
+            class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Homes-List</a>
+        </li>
+        <li>
+          <a href="/favourites"
+            class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Favourites</a>
+        </li>
+        <li>
+          <a href="/bookings"
+            class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Bookings</a>
+        </li>
+        <li>
+          <a href="/host/host-home-list"
+            class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Host
+            Homes</a>
+        </li>
+        <li>
+          <a href="/host/add-home"
+            class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Add
+            Home</a>
+        </li>
     </ul>
-    
-    <!-- Login Button -->
-    <div class="flex items-center space-x-4">
-      <a
-        href="/login"
-        class="<%= currentPage === 'login' ? 'bg-white text-red-500' : 'bg-red-600 hover:bg-white hover:text-red-500' %> py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-        </svg>
-        <span>Login</span>
-      </a>
-    </div>
+    <% } %>
+      <!-- Login Button -->
+      <div class="flex items-center space-x-4">
+        <% if(!isLoggedIn){ %>
+          <a href="/login"
+            class="<%= currentPage === 'login' ? 'bg-white text-red-500' : 'bg-red-600 hover:bg-white hover:text-red-500' %> py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            </svg>
+            <span>Login</span>
+          </a>
+          <% } else { %>
+          <a href="/logout"
+            class="bg-red-600 hover:bg-white hover:text-red-500 py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white">
+            <span>Logout</span>
+          </a>
+          <% } %>
+      </div>
   </nav>
 </header>

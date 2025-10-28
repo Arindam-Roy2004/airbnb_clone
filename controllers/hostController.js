@@ -1,28 +1,31 @@
 const Home = require("../models/home");
 
+
+exports.getHostHomes = (req, res, next) => {
+  Home.find()
+  .then(registeredHomes => {
+    res.render("host/host-home-list", {
+      registeredHomes: registeredHomes,
+      pageTitle: "Host Homes List",
+      currentPage: "host-homes",
+      isLoggedIn: req.isLoggedIn
+    });
+  })
+  .catch(err => {
+    console.log("Error fetching homes:", err);
+    res.status(500).send("Error loading homes");
+  });
+};
+
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
     currentPage: "addHome",
     editMode: false,
     home: null,
-    homeId: null
+    homeId: null,
+    isLoggedIn: req.isLoggedIn
   });
-};
-
-exports.getHostHomes = (req, res, next) => {
-  Home.find()
-    .then(registeredHomes => {
-      res.render("host/host-home-list", {
-        registeredHomes: registeredHomes,
-        pageTitle: "Host Homes List",
-        currentPage: "host-homes",
-      });
-    })
-    .catch(err => {
-      console.log("Error fetching homes:", err);
-      res.status(500).send("Error loading homes");
-    });
 };
 
 exports.postAddHome = (req, res, next) => {
@@ -34,6 +37,7 @@ exports.postAddHome = (req, res, next) => {
       res.render("host/home-added", {
         pageTitle: "Home Added Successfully",
         currentPage: "homeAdded",
+        isLoggedIn: req.isLoggedIn
       });
     })
     .catch(err => {
@@ -58,7 +62,8 @@ exports.getEditHome = (req, res, next) => {
         currentPage: "editHome",
         editMode: editMode,
         homeId: homeId,
-        home: home
+        home: home,
+        isLoggedIn: req.isLoggedIn
       });
     })
     .catch(err => {

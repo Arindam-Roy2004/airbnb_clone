@@ -20,8 +20,24 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.urlencoded({ extended: true }));
+// Middleware to check login status
+app.use((req, res, next) => {
+  console.log(req.get('Cookie'));
+  req.isLoggedIn = req.get('Cookie')?.includes('isLoggedIn=true');
+  next(); 
+})
+// Routers
 app.use(authRouter);
 app.use(storeRouter);
+app.use("/host", (req, res, next) => {
+  if (req.isLoggedIn) {
+    next();
+  }
+  else {
+    res.redirect("/login");
+  }
+}
+);
 app.use("/host", hostRouter);
 
 app.use(express.static(path.join(rootDir, 'public')))
@@ -37,9 +53,9 @@ const PORT = 3000;
 // });
 
 mongoose.connect(process.env.MONGODB_URI)
-.then(()=>{
-  app.listen(PORT,()=>{
-    console.log(`Server running on address http://localhost:${PORT}`);
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on address http://localhost:${PORT}`);
+    })
   })
-})
-.catch(err => console.log(err));
+  .catch(err => console.log(err));
