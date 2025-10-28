@@ -10,6 +10,7 @@ const express = require('express');
 //Local Module
 const storeRouter = require("./routes/storeRouter")
 const hostRouter = require("./routes/hostRouter")
+const authRouter = require("./routes/authRouter");
 const rootDir = require("./utils/pathUtil");
 const errorsController = require("./controllers/errors");
 
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 app.use(express.urlencoded({ extended: true }));
+app.use(authRouter);
 app.use(storeRouter);
 app.use("/host", hostRouter);
 
