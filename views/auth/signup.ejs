@@ -167,7 +167,8 @@
               <div class="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Account Type">
                 <!-- Guest Option -->
                 <label class="cursor-pointer">
-                  <input type="radio" name="role" value="user" required class="peer sr-only" />
+                  <input type="radio" name="role" value="guest" required class="peer sr-only" 
+                    <%= (oldInput && oldInput.role === 'guest') ? 'checked' : '' %> />
                   <div
                     class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 transition group
                             hover:border-red-400 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:text-red-600">
@@ -181,7 +182,8 @@
 
                 <!-- Host Option -->
                 <label class="cursor-pointer">
-                  <input type="radio" name="role" value="host" class="peer sr-only" />
+                  <input type="radio" name="role" value="host" class="peer sr-only"
+                    <%= (oldInput && oldInput.role === 'host') ? 'checked' : '' %> />
                   <div
                     class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 transition
                             hover:border-red-400 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:text-red-600">

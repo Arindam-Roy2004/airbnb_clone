@@ -1,3 +1,4 @@
+const user = require("../models/user");
 const { check, validationResult } = require("express-validator");
 
 exports.getLogin = (req, res, next) => {
@@ -80,10 +81,15 @@ exports.postSignup = [
     })
   ,
   check('role')
-    .notEmpty()
-    .withMessage('Role is required')
+    .optional()
     .isIn(['host', 'guest'])
     .withMessage('Role must be either host or guest')
+    .custom((value, { req }) => {
+      if (!value || value.trim() === '') {
+        throw new Error('Please select an account type');
+      }
+      return true;
+    })
   ,
   check('terms')
     .notEmpty()
@@ -107,6 +113,19 @@ exports.postSignup = [
         oldInput: { firstName, lastName, email, password, role }
       });
     }
-    res.redirect("/login");
+    const newUser = new user({ firstName, lastName, email, password, role });
+    newUser.save()
+    .then(()=>{
+      res.redirect("/login");
+    })
+    .catch(err=>{
+      res.status(422).render("auth/signup", {
+        pageTitle: "Signup",
+        currentPage: "signup",
+        isLoggedIn: req.isLoggedIn,
+        errors: [err.message],
+        oldInput: { firstName, lastName, email, password, role }
+      });
+    });
   }
-]
+];
