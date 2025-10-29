@@ -24,6 +24,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.0",
     "express-session": "^1.18.2",
+    "express-validator": "^7.3.0",
     "mongodb": "^6.20.0",
     "mongoose": "^8.19.2"
   }

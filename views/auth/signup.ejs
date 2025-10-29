@@ -20,6 +20,17 @@
         <form action="/signup" method="POST" class="space-y-4">
           <!-- First Name & Last Name Row -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+             <% if(typeof errors !== 'undefined' && errors.length > 0){ %>
+                <div class="col-span-1 md:col-span-2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                  <strong class="font-bold">Error!</strong>
+                  <ul class="list-disc list-inside">
+                    <% errors.forEach(function(error) { %>
+                      <li><%= error%></li>
+                    <% }); %>
+                  </ul>
+                </div>
+              <% } %>
+             
             <!-- First Name Field -->
             <div>
               <label for="firstName" class="block text-xs font-medium text-gray-700 mb-1">First Name</label>
@@ -30,6 +41,7 @@
                   </svg>
                 </div>
                 <input type="text" id="firstName" name="firstName" placeholder="First name" required
+                value="<%= oldInput ? oldInput.firstName : '' %>"
                   class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300" />
               </div>
             </div>
@@ -44,6 +56,7 @@
                   </svg>
                 </div>
                 <input type="text" id="lastName" name="lastName" placeholder="Last name" required
+                value="<%= oldInput ? oldInput.lastName : '' %>"
                   class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300" />
               </div>
             </div>
@@ -60,6 +73,7 @@
                 </svg>
               </div>
               <input type="email" id="email" name="email" placeholder="you@example.com" required
+              value="<%= oldInput ? oldInput.email : '' %>"
                 class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300" />
             </div>
           </div>
@@ -74,6 +88,7 @@
                 </svg>
               </div>
               <input type="password" id="password" name="password" placeholder="Create a password" required minlength="6"
+              value="<%= oldInput ? oldInput.password : '' %>"
                 class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300" />
             </div>
             <p class="mt-1 text-[11px] text-gray-500">At least 6 characters</p>
@@ -99,7 +114,7 @@
             <div class="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Account Type">
               <!-- Guest Option -->
               <label class="cursor-pointer">
-                <input type="radio" name="role" value="guest" required class="peer sr-only" />
+                <input type="radio" name="role" value="user" required class="peer sr-only"/>
                 <div class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 transition group
                             hover:border-red-400 peer-checked:border-red-500 peer-checked:bg-red-50 peer-checked:text-red-600">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
