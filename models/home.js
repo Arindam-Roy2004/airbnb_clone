@@ -52,7 +52,7 @@ module.exports = class Home {
 **/
 
 const mongoose = require('mongoose');
-const Fav = require('./favourites');
+// const Fav = require('./favourites');
 
 const homeSchema = mongoose.Schema(
   {
@@ -77,10 +77,10 @@ const homeSchema = mongoose.Schema(
   }
 )
 
-homeSchema.pre('findOneAndDelete', async function(next){
-  const homeId = this.getQuery()['_id'];
-  await Fav.deleteMany({homeId:homeId});
-  next();
-})
+// homeSchema.pre('findOneAndDelete', async function(next){
+//   const homeId = this.getQuery()['_id'];
+//   await Fav.deleteMany({homeId:homeId});
+//   next();
+// })
 
 module.exports = mongoose.model('Home',homeSchema);

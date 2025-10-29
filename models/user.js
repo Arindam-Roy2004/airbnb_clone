@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Fav = require('./favourites');
+// const Fav = require('./favourites');
+// const favourites = require('./home');
 
 const userSchema = mongoose.Schema(
   {
@@ -23,7 +24,13 @@ const userSchema = mongoose.Schema(
       type:String,
       enum: ['guest', 'host'],
       default: 'guest'
-    }
+    },
+    favourites:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Home'
+      }
+    ]
   }
 );
 
