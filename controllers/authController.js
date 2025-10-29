@@ -1,4 +1,4 @@
-const user = require("../models/user");
+const User = require("../models/user");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
@@ -6,16 +6,56 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     pageTitle: "Login",
     currentPage: "login",
-    isLoggedIn: req.isLoggedIn
+    isLoggedIn: req.isLoggedIn,
+    errors: [],
+    oldInput: {}
   });
 }
 
-exports.postLogin = (req, res, next) => {
-  // const email = req.body.email;
-  // const password = req.body.password;
-  // res.cookie("isLoggedIn",true);
-  req.session.isLoggedIn = true;
-  res.redirect("/");
+exports.postLogin = async (req, res, next) => {
+  const {email, password} = req.body;
+  
+  try {
+    // Find user by email
+    const user = await User.findOne({email: email});
+    
+    if(!user){
+      return res.status(422).render("auth/login", {
+        pageTitle: "Login",
+        currentPage: "login",
+        isLoggedIn: false,
+        errors: ["User doesn't exist. Please sign up first."],
+        oldInput: { email }
+      });
+    }
+
+    // Compare password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+    if(!isPasswordValid){
+      return res.status(422).render("auth/login", {
+        pageTitle: "Login",
+        currentPage: "login",
+        isLoggedIn: false,
+        errors: ["Invalid password. Please try again."],
+        oldInput: { email }
+      });
+    }
+
+    // Login successful
+    req.session.isLoggedIn = true;
+    req.session.user = user;
+    res.redirect("/");
+  } catch(err) {
+    console.error("Login error:", err);
+    return res.status(500).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["An error occurred. Please try again."],
+      oldInput: { email }
+    });
+  }
 }
 
 exports.postLogout = (req, res, next) => {
@@ -116,7 +156,7 @@ exports.postSignup = [
     }
     bcrypt.hash(password, 12)
     .then(hashPassword=>{
-      const newUser = new user({ firstName, lastName, email, password: hashPassword, role });
+      const newUser = new User({ firstName, lastName, email, password: hashPassword, role });
       return newUser.save()
     })
     .then(()=>{
