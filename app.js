@@ -35,6 +35,7 @@ app.use(session({
 // Middleware to check login status from SESSION
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
+  res.locals.user = req.session.user || null;
   // console.log("Session:", req.session);
   // console.log("isLoggedIn:", req.isLoggedIn);
   next();
@@ -43,14 +44,14 @@ app.use((req, res, next) => {
 app.use(authRouter);
 app.use(storeRouter);
 app.use("/host", (req, res, next) => {
-  if (req.isLoggedIn) {
-    next();
+  if (!req.isLoggedIn) {
+    return res.redirect("/login");
   }
-  else {
-    res.redirect("/login");
+  if (req.session.user.role !== 'host') {
+    return res.redirect("/"); // Redirect guests away from host pages
   }
-}
-);
+  next();
+});
 app.use("/host", hostRouter);
 
 app.use(express.static(path.join(rootDir, 'public')))

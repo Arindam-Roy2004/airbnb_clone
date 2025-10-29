@@ -37,7 +37,8 @@ exports.postAddHome = (req, res, next) => {
       res.render("host/home-added", {
         pageTitle: "Home Added Successfully",
         currentPage: "homeAdded",
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user || null 
       });
     })
     .catch(err => {
@@ -63,7 +64,8 @@ exports.getEditHome = (req, res, next) => {
         editMode: editMode,
         homeId: homeId,
         home: home,
-        isLoggedIn: req.isLoggedIn
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user || null 
       });
     })
     .catch(err => {

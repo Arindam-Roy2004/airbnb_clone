@@ -8,7 +8,8 @@ exports.getLogin = (req, res, next) => {
     currentPage: "login",
     isLoggedIn: req.isLoggedIn,
     errors: [],
-    oldInput: {}
+    oldInput: {},
+    user: req.session.user || null 
   });
 }
 
@@ -25,7 +26,8 @@ exports.postLogin = async (req, res, next) => {
         currentPage: "login",
         isLoggedIn: false,
         errors: ["User doesn't exist. Please sign up first."],
-        oldInput: { email }
+        oldInput: { email },
+        user: req.session.user || null 
       });
     }
 
@@ -38,7 +40,8 @@ exports.postLogin = async (req, res, next) => {
         currentPage: "login",
         isLoggedIn: false,
         errors: ["Invalid password. Please try again."],
-        oldInput: { email }
+        oldInput: { email },
+        user: req.session.user || null 
       });
     }
 
@@ -53,7 +56,8 @@ exports.postLogin = async (req, res, next) => {
       currentPage: "login",
       isLoggedIn: false,
       errors: ["An error occurred. Please try again."],
-      oldInput: { email }
+      oldInput: { email },
+      user: req.session.user || null 
     });
   }
 }
@@ -74,7 +78,8 @@ exports.getSignup = (req, res, next) => {
     currentPage: "signup",
     isLoggedIn: req.isLoggedIn,
     errors: [],
-    oldInput: {}
+    oldInput: {},
+    user: req.session.user || null 
   });
 }
 
@@ -151,7 +156,8 @@ exports.postSignup = [
         currentPage: "signup",
         isLoggedIn: req.isLoggedIn,
         errors: errors.array().map(err => err.msg),
-        oldInput: { firstName, lastName, email, password, role }
+        oldInput: { firstName, lastName, email, password, role },
+        user: req.session.user || null 
       });
     }
     bcrypt.hash(password, 12)
@@ -168,7 +174,8 @@ exports.postSignup = [
         currentPage: "signup",
         isLoggedIn: req.isLoggedIn,
         errors: [err.message],
-        oldInput: { firstName, lastName, email, password, role }
+        oldInput: { firstName, lastName, email, password, role },
+        user: req.session.user || null 
       });
     });
   }

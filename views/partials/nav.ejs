@@ -7,28 +7,35 @@
           class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">airbnb</a>
       </li>
       <% if(isLoggedIn) { %>
-        <li>
-          <a href="/homes"
-            class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Homes-List</a>
-        </li>
-        <li>
-          <a href="/favourites"
-            class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Favourites</a>
-        </li>
-        <li>
-          <a href="/bookings"
-            class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Bookings</a>
-        </li>
-        <li>
-          <a href="/host/host-home-list"
-            class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Host
-            Homes</a>
-        </li>
-        <li>
-          <a href="/host/add-home"
-            class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Add
-            Home</a>
-        </li>
+        <!-- Guest tabs - only show if user is guest or no role -->
+        <% if(user && user.role === 'guest') { %>
+          <li>
+            <a href="/homes"
+              class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Homes-List</a>
+          </li>
+          <li>
+            <a href="/favourites"
+              class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Favourites</a>
+          </li>
+          <li>
+            <a href="/bookings"
+              class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Bookings</a>
+          </li>
+        <% } %>
+        
+        <!-- Host tabs - only show if user is host -->
+        <% if(user && user.role === 'host') { %>
+          <li>
+            <a href="/host/host-home-list"
+              class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Host
+              Homes</a>
+          </li>
+          <li>
+            <a href="/host/add-home"
+              class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Add
+              Home</a>
+          </li>
+        <% } %>
       <% } %>
     </ul>
 
@@ -42,17 +49,19 @@
           </svg>
           <span>Login</span>
         </a>
-      <% } else { %>
-        <form action="/logout" method="POST">
-          <button type="submit"
-            class="bg-red-600 hover:bg-white hover:text-red-500 py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
-            </svg>
-            <span>Logout</span>
-          </button>
-        </form>
-      <% } %>
+        <% } else { %>
+          <form action="/logout" method="POST">
+            <button type="submit"
+              class="bg-red-600 hover:bg-white hover:text-red-500 py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                  clip-rule="evenodd" />
+              </svg>
+              <span>Logout</span>
+            </button>
+          </form>
+          <% } %>
     </div>
   </nav>
 </header>
