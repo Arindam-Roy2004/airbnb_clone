@@ -200,7 +200,6 @@ exports.postCreateBooking = async (req, res, next) => {
       user: userId,
       checkIn: checkInDate,
       checkOut: checkOutDate,
-      guest: 1, // Default to 1 guest since we're not collecting this info
       totalPrice: totalPrice,
       status: 'confirmed'
     });
@@ -230,16 +229,15 @@ exports.postCancelBooking = async (req, res, next) => {
     const bookingId = req.params.bookingId;
     const userId = req.session.user._id;
     
-    // Option 1: Update status to cancelled (recommended - keeps history)
-    await Booking.findByIdAndUpdate(bookingId, { status: 'cancelled' });
-    
-    // Option 2: Delete booking completely (uncomment if you prefer this)
-    // await Booking.findByIdAndDelete(bookingId);
-    // const User = await user.findById(userId);
-    // if (User) {
-    //   User.bookings = User.bookings.filter(b => b.toString() !== bookingId);
-    //   await User.save();
-    // }
+
+    await Booking.findByIdAndDelete(bookingId);
+    const UserId = await user.findById(userId);
+
+
+    if(UserId){
+      UserId.bookings.pull(bookingId);
+      await UserId.save();
+    }
     
     console.log("Booking cancelled:", bookingId);
     res.redirect("/bookings");
