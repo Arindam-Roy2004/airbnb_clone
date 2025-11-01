@@ -6,10 +6,8 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     pageTitle: "Login",
     currentPage: "login",
-    isLoggedIn: req.isLoggedIn,
     errors: [],
-    oldInput: {},
-    user: req.session.user || null 
+    oldInput: {}
   });
 }
 
@@ -24,10 +22,8 @@ exports.postLogin = async (req, res, next) => {
       return res.status(422).render("auth/login", {
         pageTitle: "Login",
         currentPage: "login",
-        isLoggedIn: false,
         errors: ["User doesn't exist. Please sign up first."],
-        oldInput: { email },
-        user: req.session.user || null 
+        oldInput: { email }
       });
     }
 
@@ -38,10 +34,8 @@ exports.postLogin = async (req, res, next) => {
       return res.status(422).render("auth/login", {
         pageTitle: "Login",
         currentPage: "login",
-        isLoggedIn: false,
         errors: ["Invalid password. Please try again."],
-        oldInput: { email },
-        user: req.session.user || null 
+        oldInput: { email }
       });
     }
 
@@ -54,10 +48,8 @@ exports.postLogin = async (req, res, next) => {
     return res.status(500).render("auth/login", {
       pageTitle: "Login",
       currentPage: "login",
-      isLoggedIn: false,
       errors: ["An error occurred. Please try again."],
-      oldInput: { email },
-      user: req.session.user || null 
+      oldInput: { email }
     });
   }
 }
@@ -76,10 +68,8 @@ exports.getSignup = (req, res, next) => {
   res.render("auth/signup", {
     pageTitle: "Signup",
     currentPage: "signup",
-    isLoggedIn: req.isLoggedIn,
     errors: [],
-    oldInput: {},
-    user: req.session.user || null 
+    oldInput: {}
   });
 }
 
@@ -154,10 +144,8 @@ exports.postSignup = [
       return res.status(422).render("auth/signup", {
         pageTitle: "Signup",
         currentPage: "signup",
-        isLoggedIn: req.isLoggedIn,
         errors: errors.array().map(err => err.msg),
-        oldInput: { firstName, lastName, email, password, role },
-        user: req.session.user || null 
+        oldInput: { firstName, lastName, email, password, role }
       });
     }
     bcrypt.hash(password, 12)
@@ -172,10 +160,8 @@ exports.postSignup = [
       res.status(422).render("auth/signup", {
         pageTitle: "Signup",
         currentPage: "signup",
-        isLoggedIn: req.isLoggedIn,
         errors: [err.message],
-        oldInput: { firstName, lastName, email, password, role },
-        user: req.session.user || null 
+        oldInput: { firstName, lastName, email, password, role }
       });
     });
   }

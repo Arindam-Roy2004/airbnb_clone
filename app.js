@@ -40,6 +40,7 @@ app.use(session({
 // Middleware to check login status from SESSION
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
+  res.locals.isLoggedIn = req.session.isLoggedIn || false;
   res.locals.user = req.session.user || null;
   // console.log("Session:", req.session);
   // console.log("isLoggedIn:", req.isLoggedIn);

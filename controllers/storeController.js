@@ -10,9 +10,7 @@ exports.getIndex = async (req, res, next) => {
     res.render("store/index", {
       registeredHomes: registeredHomes,
       pageTitle: "airbnb Home",
-      currentPage: "index",
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      currentPage: "index"
     });
   }
   catch (err) {
@@ -24,9 +22,7 @@ exports.getIndex = async (req, res, next) => {
   //     res.render("store/index", {
   //       registeredHomes: registeredHomes,
   //       pageTitle: "airbnb Home",
-  //       currentPage: "index",
-  //       isLoggedIn: req.isLoggedIn,
-  //       user: req.session.user || null
+  //       currentPage: "index"
   //     });
   //   })
   //   .catch(err => {
@@ -41,9 +37,7 @@ exports.getHomes = async (req, res, next) => {
   //     res.render("store/home-list", {
   //       registeredHomes: registeredHomes,
   //       pageTitle: "Homes List",
-  //       currentPage: "Home",
-  //       isLoggedIn: req.isLoggedIn,
-  //       user: req.session.user || null
+  //       currentPage: "Home"
   //     });
   //   })
   //   .catch(err => {
@@ -55,9 +49,7 @@ exports.getHomes = async (req, res, next) => {
     res.render("store/home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Homes List",
-      currentPage: "Home",
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      currentPage: "Home"
     });
   }
   catch (err) {
@@ -90,9 +82,7 @@ exports.getBookings = async (req, res, next) => {
     res.render("store/bookings", {
       pageTitle: "My Bookings",
       currentPage: "bookings",
-      bookings: activeBookings,
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      bookings: activeBookings
     });
 
   } catch (err) {
@@ -100,9 +90,7 @@ exports.getBookings = async (req, res, next) => {
     res.render("store/bookings", {
       pageTitle: "My Bookings",
       currentPage: "bookings",
-      bookings: [],
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      bookings: []
     });
   }
 };
@@ -114,17 +102,13 @@ exports.getHomesDetails = async (req, res, next) => {
   //     if (!home) {
   //       return res.status(404).render("store/404", {
   //         pageTitle: "Home Not Found",
-  //         currentPage: "",
-  //         isLoggedIn: req.isLoggedIn,
-  //         user: req.session.user || null
+  //         currentPage: ""
   //       });
   //     }
   //     res.render("store/home-detail", {
   //       home: home,
   //       pageTitle: "Home Details",
-  //       currentPage: "Home",
-  //       isLoggedIn: req.isLoggedIn,
-  //       user: req.session.user || null
+  //       currentPage: "Home"
   //     });
   //   })
   //   .catch(err => {
@@ -138,18 +122,14 @@ exports.getHomesDetails = async (req, res, next) => {
     if (!home) {
       return res.status(404).render("store/404", {
         pageTitle: "Home Not Found",
-        currentPage: "",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
+        currentPage: ""
       });
     }
     else {
       res.render("store/home-detail", {
         home: home,
         pageTitle: "Home Details",
-        currentPage: "Home",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
+        currentPage: "Home"
       });
     }
   }
@@ -157,9 +137,7 @@ exports.getHomesDetails = async (req, res, next) => {
     console.log("Error fetching home:", err);
     res.status(500).send("Error loading home").render("store/404", {
       pageTitle: "Home Not Found",
-      currentPage: "",
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      currentPage: ""
     });
   }
 }
@@ -172,18 +150,14 @@ exports.getFavouriteList = async (req, res, next) => {
     if (!User) {
       return res.status(404).render("store/404", {
         pageTitle: "User Not Found",
-        currentPage: "",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
+        currentPage: ""
       });
     }
     const FavHomes = User.favourites;
     return res.render("store/favourite-list", {
       pageTitle: "My Favourites",
       currentPage: "favourites",
-      favHomes: FavHomes,
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null
+      favHomes: FavHomes
     });
   }
   catch (err) {
@@ -268,9 +242,7 @@ exports.getBookingPage = async (req, res, next) => {
     if (!home) {
       return res.status(404).render("store/404", {
         pageTitle: "Home Not Found",
-        currentPage: "",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
+        currentPage: ""
       });
     }
 
@@ -281,8 +253,6 @@ exports.getBookingPage = async (req, res, next) => {
       home: home,
       pageTitle: "Book " + home.houseName,
       currentPage: "bookings",
-      isLoggedIn: req.isLoggedIn,
-      user: req.session.user || null,
       minDate: today
     });
   } catch (err) {
