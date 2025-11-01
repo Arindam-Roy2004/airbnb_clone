@@ -143,7 +143,6 @@ exports.postDeleteFavourite = async(req, res, next) => {
 };
 
 
-// 👇 ADD THIS NEW METHOD
 exports.getBookingPage = async (req, res, next) => {
   try {
     const homeId = req.params.homeId;
@@ -175,7 +174,7 @@ exports.getBookingPage = async (req, res, next) => {
   }
 };
 
-// 👇 ADD THIS NEW METHOD
+
 exports.postCreateBooking = async (req, res, next) => {
   try {
     const { homeId, checkIn, checkOut } = req.body;
@@ -225,7 +224,7 @@ exports.postCreateBooking = async (req, res, next) => {
   }
 };
 
-// 👇 ADD THIS NEW METHOD
+
 exports.postCancelBooking = async (req, res, next) => {
   try {
     const bookingId = req.params.bookingId;
