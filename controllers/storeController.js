@@ -3,46 +3,74 @@ const Booking = require("../models/booking");
 // const Favourites = require("../models/favourites");
 const user = require("../models/user");
 
-exports.getIndex = (req, res, next) => {
+exports.getIndex = async (req, res, next) => {
   console.log("storeController -> session", req.session);
-  Home.find()
-    .then(registeredHomes => {
-      res.render("store/index", {
-        registeredHomes: registeredHomes,
-        pageTitle: "airbnb Home",
-        currentPage: "index",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
-      });
-    })
-    .catch(err => {
-      console.log("Error fetching homes:", err);
-      res.status(500).send("Error loading homes");
+  try {
+    const registeredHomes = await Home.find();
+    res.render("store/index", {
+      registeredHomes: registeredHomes,
+      pageTitle: "airbnb Home",
+      currentPage: "index",
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user || null
     });
+  }
+  catch (err) {
+    console.log("Error fetching homes:", err);
+    res.status(500).send("Error loading homes");
+  }
+  // Home.find()
+  //   .then(registeredHomes => {
+  //     res.render("store/index", {
+  //       registeredHomes: registeredHomes,
+  //       pageTitle: "airbnb Home",
+  //       currentPage: "index",
+  //       isLoggedIn: req.isLoggedIn,
+  //       user: req.session.user || null
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log("Error fetching homes:", err);
+  //     res.status(500).send("Error loading homes");
+  //   });
 };
 
-exports.getHomes = (req, res, next) => {
-  Home.find()
-    .then(registeredHomes => {
-      res.render("store/home-list", {
-        registeredHomes: registeredHomes,
-        pageTitle: "Homes List",
-        currentPage: "Home",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
-      });
-    })
-    .catch(err => {
-      console.log("Error fetching homes:", err);
-      res.status(500).send("Error loading homes");
+exports.getHomes = async (req, res, next) => {
+  // Home.find()
+  //   .then(registeredHomes => {
+  //     res.render("store/home-list", {
+  //       registeredHomes: registeredHomes,
+  //       pageTitle: "Homes List",
+  //       currentPage: "Home",
+  //       isLoggedIn: req.isLoggedIn,
+  //       user: req.session.user || null
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log("Error fetching homes:", err);
+  //     res.status(500).send("Error loading homes");
+  //   });
+  try {
+    const registeredHomes = await Home.find();
+    res.render("store/home-list", {
+      registeredHomes: registeredHomes,
+      pageTitle: "Homes List",
+      currentPage: "Home",
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user || null
     });
+  }
+  catch (err) {
+    console.log("Error fetching homes:", err);
+    res.status(500).send("Error loading homes");
+  }
 };
 
-// 👇 REPLACE YOUR EXISTING getBookings METHOD WITH THIS
+
 exports.getBookings = async (req, res, next) => {
   try {
     const userId = req.session.user._id;
-    
+
     // Get user with populated bookings and home details
     const userData = await user.findById(userId)
       .populate({
@@ -52,12 +80,13 @@ exports.getBookings = async (req, res, next) => {
           model: 'Home'
         }
       });
-    
+    console.log("User Data with Bookings:", userData);
+
     // Filter out cancelled bookings (optional - remove filter to show all)
     const activeBookings = userData.bookings.filter(b => b.status !== 'cancelled');
-    
+
     console.log("User bookings:", activeBookings);
-    
+
     res.render("store/bookings", {
       pageTitle: "My Bookings",
       currentPage: "bookings",
@@ -65,7 +94,7 @@ exports.getBookings = async (req, res, next) => {
       isLoggedIn: req.isLoggedIn,
       user: req.session.user || null
     });
-    
+
   } catch (err) {
     console.log("Error fetching bookings:", err);
     res.render("store/bookings", {
@@ -78,76 +107,34 @@ exports.getBookings = async (req, res, next) => {
   }
 };
 
-exports.getHomesDetails = (req, res, next) => {
+exports.getHomesDetails = async (req, res, next) => {
+  // const homeId = req.params.homeId;
+  // Home.findById(homeId)
+  //   .then(home => {
+  //     if (!home) {
+  //       return res.status(404).render("store/404", {
+  //         pageTitle: "Home Not Found",
+  //         currentPage: "",
+  //         isLoggedIn: req.isLoggedIn,
+  //         user: req.session.user || null
+  //       });
+  //     }
+  //     res.render("store/home-detail", {
+  //       home: home,
+  //       pageTitle: "Home Details",
+  //       currentPage: "Home",
+  //       isLoggedIn: req.isLoggedIn,
+  //       user: req.session.user || null
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log("Error fetching home:", err);
+  //     res.status(500).send("Error loading home");
+  //   });
   const homeId = req.params.homeId;
-  Home.findById(homeId)
-    .then(home => {
-      if (!home) {
-        return res.status(404).render("store/404", {
-          pageTitle: "Home Not Found",
-          currentPage: "",
-          isLoggedIn: req.isLoggedIn,
-          user: req.session.user || null
-        });
-      }
-      res.render("store/home-detail", {
-        home: home,
-        pageTitle: "Home Details",
-        currentPage: "Home",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user || null
-      });
-    })
-    .catch(err => {
-      console.log("Error fetching home:", err);
-      res.status(500).send("Error loading home");
-    });
-}
-exports.getFavouriteList = async (req, res, next) => {
-  const userId = req.session.user._id;
-  // console.log("User ID in favourites:", userId);
-  const userData = await user.findById(userId).populate('favourites');
-  console.log("User Data with Favourites:", userData);
-  const favHomes = userData.favourites;
-  res.render("store/favourite-list", {
-    pageTitle: "My Favourites",
-    currentPage: "favourites",
-    favHomes: favHomes,
-    isLoggedIn: req.isLoggedIn,
-    user: req.session.user || null
-  });
-}
 
-exports.postFavouriteList = async (req, res, next) => {
-  console.log(req.body);
-  const homeId = req.body.homeId;
-  const userId = req.session.user._id;
-  const User = await user.findById(userId);
-  if (User) {
-    User.favourites.push(homeId);
-    await User.save();
-  }
-  res.redirect("/favourites");
-};
-
-exports.postDeleteFavourite = async(req, res, next) => {
-  const homeId = req.params.homeId;
-  console.log(homeId);
-  const userId = req.session.user._id;
-  const User = await user.findById(userId)
-  if(User){
-    User.favourites.pull(homeId);
-    await User.save();
-  }
-  res.redirect("/favourites");
-};
-
-
-exports.getBookingPage = async (req, res, next) => {
   try {
-    const homeId = req.params.homeId;
     const home = await Home.findById(homeId);
-    
     if (!home) {
       return res.status(404).render("store/404", {
         pageTitle: "Home Not Found",
@@ -156,10 +143,140 @@ exports.getBookingPage = async (req, res, next) => {
         user: req.session.user || null
       });
     }
-    
+    else {
+      res.render("store/home-detail", {
+        home: home,
+        pageTitle: "Home Details",
+        currentPage: "Home",
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user || null
+      });
+    }
+  }
+  catch (err) {
+    console.log("Error fetching home:", err);
+    res.status(500).send("Error loading home").render("store/404", {
+      pageTitle: "Home Not Found",
+      currentPage: "",
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user || null
+    });
+  }
+}
+exports.getFavouriteList = async (req, res, next) => {
+  const userId = req.session.user._id;
+  // console.log("User ID in favourites:", userId);
+  // 
+  try {
+    const User = await user.findById(userId).populate('favourites');
+    if (!User) {
+      return res.status(404).render("store/404", {
+        pageTitle: "User Not Found",
+        currentPage: "",
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user || null
+      });
+    }
+    const FavHomes = User.favourites;
+    return res.render("store/favourite-list", {
+      pageTitle: "My Favourites",
+      currentPage: "favourites",
+      favHomes: FavHomes,
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user || null
+    });
+  }
+  catch (err) {
+    console.log("Error fetching favourites:", err);
+    res.status(500).send("Error loading favourites");
+  }
+}
+
+exports.postFavouriteList = async (req, res, next) => {
+  // console.log(req.body);
+  // const homeId = req.body.homeId;
+  // const userId = req.session.user._id;
+  // const User = await user.findById(userId);
+  // if (User) {
+  //   User.favourites.push(homeId);
+  //   await User.save();
+  // }
+  // res.redirect("/favourites");
+  try {
+    const homeId = req.body.homeId;
+    if (!homeId) return res.status(400).send("Home ID is required");
+    const userId = req.session.user._id;
+    if (!userId) return res.status(401).send("User not authenticated");
+
+    const User = await user.findById(userId);
+    if (!User) return res.status(404).send("User not found");
+
+    if (!User.favourites.includes(homeId)) {
+      User.favourites.push(homeId);
+      await User.save();
+      return res.redirect("/favourites");
+    }
+    else {
+      return res.status(400).send("Home already in favourites");
+    }
+  }
+  catch (err) {
+    console.log("Error adding to favourites:", err);
+    res.status(500).send("Error adding to favourites");
+  }
+};
+
+exports.postDeleteFavourite = async (req, res, next) => {
+  const homeId = req.params.homeId;
+  // console.log(homeId);
+  // const userId = req.session.user._id;
+  // const User = await user.findById(userId)
+  // if(User){
+  //   User.favourites.pull(homeId);
+  //   await User.save();
+  // }
+  // res.redirect("/favourites");
+  try {
+    if (!homeId) return res.status(400).send("Home ID is required");
+    const userId = req.session.user._id;
+    if (!userId) return res.status(401).send("User not authenticated");
+    const User = await user.findById(userId);
+
+    if (!User) return res.status(404).send("User not found");
+
+    if (User.favourites.includes(homeId)) {
+      User.favourites.pull(homeId);
+      await User.save();
+      return res.redirect("/favourites");
+    }
+    else {
+      return res.status(400).send("Home not in favourites");
+    }
+  }
+  catch (err) {
+    console.log("Error removing from favourites:", err);
+    res.status(500).send("Error removing from favourites");
+  }
+};
+
+
+exports.getBookingPage = async (req, res, next) => {
+  try {
+    const homeId = req.params.homeId;
+    const home = await Home.findById(homeId);
+
+    if (!home) {
+      return res.status(404).render("store/404", {
+        pageTitle: "Home Not Found",
+        currentPage: "",
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user || null
+      });
+    }
+
     // Get today's date for min date validation
     const today = new Date().toISOString().split('T')[0];
-    
+
     res.render("store/reserve", {
       home: home,
       pageTitle: "Book " + home.houseName,
@@ -179,21 +296,21 @@ exports.postCreateBooking = async (req, res, next) => {
   try {
     const { homeId, checkIn, checkOut } = req.body;
     const userId = req.session.user._id;
-    
+
     // Fetch the home to get price
     const home = await Home.findById(homeId);
     if (!home) {
       return res.status(404).send("Home not found");
     }
-    
+
     // Calculate number of nights
     const checkInDate = new Date(checkIn);
     const checkOutDate = new Date(checkOut);
     const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-    
+
     // Calculate total price (price per night × number of nights)
     const totalPrice = nights * home.price;
-    
+
     // Create new booking
     const booking = new Booking({
       home: homeId,
@@ -203,20 +320,20 @@ exports.postCreateBooking = async (req, res, next) => {
       totalPrice: totalPrice,
       status: 'confirmed'
     });
-    
+
     // Save booking
     await booking.save();
-    
+
     // Add booking reference to user
     const User = await user.findById(userId);
     if (User) {
       User.bookings.push(booking._id);
       await User.save();
     }
-    
+
     console.log("Booking created successfully:", booking);
     res.redirect("/bookings");
-    
+
   } catch (err) {
     console.log("Error creating booking:", err);
     res.status(500).send("Error creating booking");
@@ -228,20 +345,20 @@ exports.postCancelBooking = async (req, res, next) => {
   try {
     const bookingId = req.params.bookingId;
     const userId = req.session.user._id;
-    
+
 
     await Booking.findByIdAndDelete(bookingId);
     const UserId = await user.findById(userId);
 
 
-    if(UserId){
+    if (UserId) {
       UserId.bookings.pull(bookingId);
       await UserId.save();
     }
-    
+
     console.log("Booking cancelled:", bookingId);
     res.redirect("/bookings");
-    
+
   } catch (err) {
     console.log("Error cancelling booking:", err);
     res.status(500).send("Error cancelling booking");
