@@ -3,19 +3,13 @@ const mongoose = require('mongoose');
 // const favourites = require('./home');
 
 const bookingSchema = mongoose.Schema({
-  checkInDate: {
+  checkIn: {
     type: Date,
     required: true
   },
-  checkOutDate: {
+  checkOut: {
     type: Date,
     required: true
-  },
-  guest: {
-    type: Number,
-    required: true,
-    min: 1,
-    default: 1
   },
   totalPrice: {
     type: Number,

@@ -141,7 +141,6 @@ yt-code/
 │   └── partials/        # Reusable components
 │       ├── head.ejs     # HTML head with Tailwind
 │       ├── nav.ejs      # Role-based navigation
-│       ├── book.ejs     # Book button
 │       ├── favourites.ejs# Favourite button
 │       └── delete.ejs   # Delete button
 ├── public/               # Static files

@@ -30,7 +30,12 @@ app.use(session({
   secret: 'my secret',
   resave: false,
   saveUninitialized: false,
-  store: store
+  store: store,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
+    httpOnly: true, // Prevents client-side JS from accessing the cookie
+    secure: false // Set to true in production with HTTPS
+  }
 }));
 // Middleware to check login status from SESSION
 app.use((req, res, next) => {
