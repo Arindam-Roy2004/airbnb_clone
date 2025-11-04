@@ -9,8 +9,12 @@
         </h1>
         <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST"
           enctype="multipart/form-data" class="max-w-md mx-auto">
-          <% if (editMode) { %>
-            <input type="hidden" name="id" value="<%= homeId %>" />
+          <% if (editMode && home.photoPath) { %>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-semibold mb-2">Current Image:</label>
+              <img src="<%= home.photoPath %>" alt="<%= home.houseName %>"
+                class="w-full h-48 object-cover rounded-md border" />
+            </div>
             <% } %>
               <input type="text" name="houseName" value="<%= editMode ? home.houseName : '' %>"
                 placeholder="Enter your House Name"
