@@ -20,7 +20,7 @@ exports.getHostHomes = (req, res, next) => {
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
-    currentPage: "addHome"
+    currentPage: "addHome",
     editMode: false,
     home: null,
     homeId: null,
@@ -28,7 +28,14 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { houseName, price, location, rating, photoUrl,description, id } = req.body;
+  const { houseName, price, location, rating,description, id } = req.body;
+  if(!req.file){
+    console.log("No file uploaded");
+    return res.status(400).send("No file Uploaded");
+  }
+
+  const photoPath = '/uploads/' + req.file.filename;
+  console.log("file uploaded at:", photoPath);
   const home = new Home({houseName, price, location, rating, photoPath, description});
   home.save()
     .then(() => {
@@ -57,7 +64,7 @@ exports.getEditHome = (req, res, next) => {
       console.log("Home found for editing", home);
       res.render("host/edit-home", {
         pageTitle: "Edit Home",
-        currentPage: "editHome"
+        currentPage: "editHome",
         editMode: editMode,
         homeId: homeId,
         home: home,
@@ -72,7 +79,7 @@ exports.getEditHome = (req, res, next) => {
 exports.postEditHome = (req, res, next) => {
   console.log(req.body);
   // const homeId = req.params.homeId;
-  const { houseName, price, location, rating, photoUrl, description, id } = req.body;
+  const { houseName, price, location, rating description, id } = req.body;
   Home.findById(id)
   .then(home=>{
     if(!home){
@@ -83,7 +90,10 @@ exports.postEditHome = (req, res, next) => {
     home.price = price;
     home.location = location;
     home.rating = rating;
-    home.photoUrl = photoUrl;
+    if(req.file){
+      home.photoPath = '/uploads/' + req.file.filename;
+      console.log("Home photo updated to:", home.photoPath);
+    }
     home.description = description;
     home.save()
     .then((result)=>{

@@ -4,12 +4,12 @@ const {getDb} = require("../utils/databaseUtil");
 const {ObjectId,mongo} = require('mongodb');
 
 module.exports = class Home {
-  constructor(houseName, price, location, rating, photoUrl,description,_id) {
+  constructor(houseName, price, location, rating, photoPath,description,_id) {
     this.houseName = houseName;
     this.price = price;
     this.location = location;
     this.rating = rating;
-    this.photoUrl = photoUrl;
+    this.photoPath = photoPath;
     this.description = description;
     if(_id) this._id = _id;
   }

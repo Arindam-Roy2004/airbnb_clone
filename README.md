@@ -183,7 +183,7 @@ yt-code/
   price: Number,            // Required (per night)
   location: String,         // Required
   rating: Number,           // Required (1-5)
-  photoUrl: String,         // Image URL
+  photoPath: String,         // Image URL
   description: String,      // Property description
   createdAt: Date,
   updatedAt: Date
