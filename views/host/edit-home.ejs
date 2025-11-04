@@ -6,16 +6,22 @@
       <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
         <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
           <%= editMode ? 'Edit' : 'Register' %> Your Home on AirBnB
-        </h1>
-        <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST"
+        </h1>        <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST"
           enctype="multipart/form-data" class="max-w-md mx-auto">
+          
+          <!-- Hidden ID field for edit mode -->
+          <% if (editMode) { %>
+            <input type="hidden" name="id" value="<%= homeId %>" />
+          <% } %>
+          
+          <!-- Current Image Display (only in edit mode) -->
           <% if (editMode && home.photoPath) { %>
             <div class="mb-4">
               <label class="block text-gray-700 font-semibold mb-2">Current Image:</label>
               <img src="<%= home.photoPath %>" alt="<%= home.houseName %>"
                 class="w-full h-48 object-cover rounded-md border" />
             </div>
-            <% } %>
+          <% } %>
               <input type="text" name="houseName" value="<%= editMode ? home.houseName : '' %>"
                 placeholder="Enter your House Name"
                 class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
