@@ -72,7 +72,7 @@ const homeSchema = mongoose.Schema(
       type: Number,
       required: true
     },
-    photoUrl: String,
+    photoPath: String,
     description: String
   }
 )

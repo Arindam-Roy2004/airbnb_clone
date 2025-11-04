@@ -20,10 +20,10 @@ exports.getHostHomes = (req, res, next) => {
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
-    currentPage: "addHome",
+    currentPage: "addHome"
     editMode: false,
     home: null,
-    homeId: null
+    homeId: null,
   });
 };
 
@@ -57,10 +57,10 @@ exports.getEditHome = (req, res, next) => {
       console.log("Home found for editing", home);
       res.render("host/edit-home", {
         pageTitle: "Edit Home",
-        currentPage: "editHome",
+        currentPage: "editHome"
         editMode: editMode,
         homeId: homeId,
-        home: home
+        home: home,
       });
     })
     .catch(err => {
