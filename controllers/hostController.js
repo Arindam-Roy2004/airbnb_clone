@@ -78,8 +78,8 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   console.log(req.body);
-  // const homeId = req.params.homeId;
-  const { houseName, price, location, rating, description, id } = req.body;
+  const id = req.params.homeId;
+  const { houseName, price, location, rating, description} = req.body;
   Home.findById(id)
   .then(home=>{
     if(!home){
@@ -95,7 +95,7 @@ exports.postEditHome = (req, res, next) => {
       console.log("Home photo updated to:", home.photoPath);
     }
     home.description = description;
-    home.save()
+    return home.save()
     .then((result)=>{
       console.log(result+" Home updated successfully");
     })
