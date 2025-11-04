@@ -30,25 +30,32 @@
                     </svg>
                     <span class="text-gray-700">
                       <%= home.rating %>
-                    </span>                </div>
-              </div>
-              <div class="flex gap-2 mt-4">
-                <a href="/homes/<%= home._id %>"
-                  class="flex-1 text-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300 font-semibold">
-                  View Details
-                </a>
-                <a href="/homes/<%= home._id %>/book"
-                  class="flex-1 text-center bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 font-semibold">
-                  Book Now
-                </a>
-                <form action="/favourites" method="POST" class="flex-1">
-                  <input type="hidden" name="homeId" value="<%= home._id %>">
-                  <button type="submit"
-                    class="w-full bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition duration-300 font-semibold">
-                    ⭐ Favourite
-                  </button>
-                </form>
-              </div>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-2">
+                  <a href="/homes/<%= home._id %>/book"
+                    class="w-full inline-flex items-center justify-center px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-all duration-200">
+                    Book Now
+                  </a>
+                  
+                  <div class="flex gap-2">
+                    <a href="/homes/<%= home._id %>"
+                      class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all duration-200">
+                      Details
+                    </a>
+                    
+                    <form action="/favourites" method="POST" class="flex-1">
+                      <input type="hidden" name="homeId" value="<%= home._id %>">
+                      <button type="submit"
+                        class="w-full inline-flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all duration-200">
+                        ♡ Save
+                      </button>
+                    </form>
+                  </div>
+                </div>
             </div>
           </div>
             <% }) %>
