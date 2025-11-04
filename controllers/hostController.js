@@ -29,7 +29,7 @@ exports.getAddHome = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   const { houseName, price, location, rating, photoUrl,description, id } = req.body;
-  const home = new Home({houseName, price, location, rating, photoUrl, description});
+  const home = new Home({houseName, price, location, rating, photoPath, description});
   home.save()
     .then(() => {
       console.log("Home added successfully");
