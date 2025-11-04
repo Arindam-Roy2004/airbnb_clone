@@ -1,50 +1,35 @@
 <%- include('../partials/head') %>
   </head>
+
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
-      <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%= editMode ? 'Edit' : 'Register' %> Your Home on AirBnB</h1>
-      <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST" class="max-w-md mx-auto">
-        <% if (editMode) { %>
-          <input type="hidden" name="id" value="<%= homeId %>" />
-        <% } %>
-        <input
-          type="text"
-          name="houseName"
-          value="<%= editMode ? home.houseName : '' %>"
-          placeholder="Enter your House Name"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="price"
-          value="<%= editMode ? home.price : '' %>"
-          placeholder="Price Per Night"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="location"
-          value="<%= editMode ? home.location : '' %>"
-          placeholder="Location"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="rating"
-          value="<%= editMode ? home.rating : '' %>"
-          placeholder="Rating"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="photoUrl"
-          value="<%= editMode ? home.photoUrl : '' %>"
-          placeholder="Enter Photo URL"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <textarea
-          name="description"
-          placeholder="Enter Home Description"
-          rows="4"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"><%= editMode && home.description ? home.description : '' %></textarea>
-        <input type="submit" value="<%= editMode ? 'Update' : 'Submit' %>" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300" />
-      </form>
-    </main>
+      <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
+          <%= editMode ? 'Edit' : 'Register' %> Your Home on AirBnB
+        </h1>
+        <form action="<%= editMode ? '/host/edit-home/' + homeId : '/host/add-home' %>" method="POST"
+          enctype="multipart/form-data" class="max-w-md mx-auto">
+          <% if (editMode) { %>
+            <input type="hidden" name="id" value="<%= homeId %>" />
+            <% } %>
+              <input type="text" name="houseName" value="<%= editMode ? home.houseName : '' %>"
+                placeholder="Enter your House Name"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <input type="text" name="price" value="<%= editMode ? home.price : '' %>" placeholder="Price Per Night"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <input type="text" name="location" value="<%= editMode ? home.location : '' %>" placeholder="Location"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <input type="text" name="rating" value="<%= editMode ? home.rating : '' %>" placeholder="Rating"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <input type="file" name="photo" placeholder="Enter Photo URL" ,
+                accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+              <textarea name="description" placeholder="Enter Home Description" rows="4"
+                class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"><%= editMode && home.description ? home.description : '' %></textarea>
+              <input type="submit" value="<%= editMode ? 'Update' : 'Submit' %>"
+                class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300" />
+        </form>
+      </main>
   </body>
-</html>
+
+  </html>
