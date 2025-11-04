@@ -79,7 +79,7 @@ exports.getEditHome = (req, res, next) => {
 exports.postEditHome = (req, res, next) => {
   console.log(req.body);
   // const homeId = req.params.homeId;
-  const { houseName, price, location, rating description, id } = req.body;
+  const { houseName, price, location, rating, description, id } = req.body;
   Home.findById(id)
   .then(home=>{
     if(!home){
