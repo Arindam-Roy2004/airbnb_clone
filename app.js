@@ -34,7 +34,7 @@ app.use(session({
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
     httpOnly: true, // Prevents client-side JS from accessing the cookie
-    secure: false // Set to true in production with HTTPS
+    secure: process.env.NODE_ENV === 'production' // True in production with HTTPS
   }
 }));
 // Middleware to check login status from SESSION
@@ -64,7 +64,7 @@ app.use(express.static(path.join(rootDir, 'public')))
 
 app.use(errorsController.pageNotFound);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 // mongoConnect((client) => {
 //   console.log(client);
 //   app.listen(PORT, () => {

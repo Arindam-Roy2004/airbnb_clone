@@ -4,3 +4,5 @@ data/homes.json
 data/favourites.json
 *.log
 .DS_Store
+public/uploads/*
+!public/uploads/.gitkeep
