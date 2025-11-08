@@ -1,5 +1,6 @@
 const Home = require("../models/home");
 const user = require("../models/user");
+const deleteImage = require("../utils/fileHelper");
 
 
 exports.getHostHomes = async (req, res, next) => {
@@ -165,14 +166,21 @@ exports.postEditHome = async (req, res, next) => {
       console.log("Home not found for updating");
       return res.redirect("/host/host-home-list");
     }
+    if(req.file){
+      console.log('New file uploaded for home update');
+
+      const oldImagePath = home.photoPath;
+      if(oldImagePath){
+        await deleteImage(oldImagePath);
+      }
+
+      home.photoPath = '/uploads/' + req.file.filename;
+      console.log("Home photo updated to:", home.photoPath);
+    }
     home.houseName = houseName;
     home.price = price;
     home.location = location;
     home.rating = rating;
-    if (req.file) {
-      home.photoPath = '/uploads/' + req.file.filename;
-      console.log("Home photo updated to:", home.photoPath);
-    }
     home.description = description;
     await home.save();
     console.log("Home updated successfully");
