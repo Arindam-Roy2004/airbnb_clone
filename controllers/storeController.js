@@ -60,6 +60,11 @@ exports.getHomes = async (req, res, next) => {
 
 
 exports.getBookings = async (req, res, next) => {
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  
   try {
     const userId = req.session.user._id;
 
@@ -142,6 +147,11 @@ exports.getHomesDetails = async (req, res, next) => {
   }
 }
 exports.getFavouriteList = async (req, res, next) => {
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  
   const userId = req.session.user._id;
   // console.log("User ID in favourites:", userId);
   // 
@@ -263,6 +273,11 @@ exports.getBookingPage = async (req, res, next) => {
 
 
 exports.postCreateBooking = async (req, res, next) => {
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  
   try {
     const { homeId, checkIn, checkOut } = req.body;
     const userId = req.session.user._id;
@@ -312,6 +327,11 @@ exports.postCreateBooking = async (req, res, next) => {
 
 
 exports.postCancelBooking = async (req, res, next) => {
+  // Check if user is logged in
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  
   try {
     const bookingId = req.params.bookingId;
     const userId = req.session.user._id;
