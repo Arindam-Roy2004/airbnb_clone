@@ -205,6 +205,14 @@ exports.postDeleteHome = async (req, res, next) => {
   //     res.status(500).send("Error deleting home");
   //   });
   try{
+    const home = await Home.findById(homeId);
+    if(!home){
+      console.log("Home not found for deletion");
+      return res.redirect("/host/host-home-list");
+    }
+    if(home.photoPath){
+      await deleteImage(home.photoPath);
+    }
     const deletedhome = await Home.findByIdAndDelete(homeId);
     console.log("Home deleted successfully");
     res.redirect("/host/host-home-list");
