@@ -43,8 +43,14 @@ app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
   res.locals.isLoggedIn = req.session.isLoggedIn || false;
   res.locals.user = req.session.user || null;
-  // console.log("Session:", req.session);
-  // console.log("isLoggedIn:", req.isLoggedIn);
+  
+  // Debug logging for production
+  if (process.env.NODE_ENV === 'production' && req.path === '/') {
+    console.log("Session ID:", req.sessionID);
+    console.log("isLoggedIn:", req.isLoggedIn);
+    console.log("User:", req.session.user ? req.session.user.email : 'Not logged in');
+  }
+  
   next();
 })
 // Routers
