@@ -74,8 +74,12 @@ const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
+    console.log('✅ MongoDB connected successfully');
     app.listen(PORT, () => {
       console.log(`Server running on address http://localhost:${PORT}`);
     })
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    console.error('MONGODB_URI:', process.env.MONGODB_URI ? 'Set (hidden for security)' : 'NOT SET!');
+  });
