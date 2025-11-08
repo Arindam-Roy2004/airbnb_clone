@@ -42,7 +42,20 @@ exports.postLogin = async (req, res, next) => {
     // Login successful
     req.session.isLoggedIn = true;
     req.session.user = user;
-    res.redirect("/");
+    
+    // Save session before redirect to ensure it persists
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        return res.status(500).render("auth/login", {
+          pageTitle: "Login",
+          currentPage: "login",
+          errors: ["An error occurred. Please try again."],
+          oldInput: { email }
+        });
+      }
+      res.redirect("/");
+    });
   } catch(err) {
     console.error("Login error:", err);
     return res.status(500).render("auth/login", {
