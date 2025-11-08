@@ -1,6 +1,8 @@
-# 🏠 AirBnB Clone - Full-Stack Application
+# 🏠 Airbnb Clone - Full-Stack Application
 
-A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, and EJS templating engine. This project includes user authentication, role-based access control, booking management, and a modern responsive UI.
+A feature-rich Airbnb clone application built with Node.js, Express, MongoDB, and EJS templating engine. This production-ready application includes user authentication, role-based access control, property management, booking system, file uploads, and a modern responsive UI.
+
+**🌐 Live Demo:** [https://airbnb-clone-wc9n.onrender.com](https://airbnb-clone-wc9n.onrender.com)
 
 ## ✨ Features
 
@@ -13,12 +15,12 @@ A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, an
 - ✅ Logout functionality
 
 ### 🏡 Host Features
-- ✅ Add new homes with details (name, price, location, rating, photos, description)
+- ✅ Add new homes with details (name, price, location, rating, description)
+- ✅ Upload property images (file upload with Multer)
 - ✅ View all hosted homes in dashboard
-- ✅ Edit existing home details
-- ✅ Delete homes from listing
+- ✅ Edit existing home details and images
+- ✅ Delete homes with automatic image cleanup
 - ✅ Host-only routes with middleware protection
-- ✅ View bookings for hosted properties (coming soon)
 
 ### 🌍 Guest Features
 - ✅ Browse all available homes
@@ -48,19 +50,24 @@ A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, an
 - MongoDB with Mongoose ODM
 - Express Session (session management)
 - connect-mongodb-session (session store)
-- bcrypt (password hashing)
+- bcryptjs (password hashing)
 - express-validator (form validation)
+- Multer (file upload handling)
 
 **Frontend:**
 - EJS (Embedded JavaScript templating)
-- Tailwind CSS (utility-first CSS framework)
-- Font Awesome (icons)
+- Tailwind CSS v3.4 (utility-first CSS framework)
 - Vanilla JavaScript (client-side interactions)
-- HTML5
+- HTML5 & CSS3
 
 **Database:**
 - MongoDB Atlas (Cloud Database)
-- Collections: Users, Homes, Bookings
+- Collections: Users, Homes, Bookings, Sessions
+
+**Deployment:**
+- Render.com (Web Service)
+- MongoDB Atlas (Database hosting)
+- Git/GitHub (Version control)
 
 ## 📦 Installation
 
@@ -73,8 +80,8 @@ A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, an
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd yt-code
+   git clone https://github.com/Arindam-Roy2004/airbnb_clone.git
+   cd airbnb_clone
    ```
 
 2. **Install dependencies**
@@ -88,20 +95,22 @@ A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, an
    ```env
    MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/airbnb?retryWrites=true&w=majority
    PORT=3000
-   SESSION_SECRET=your-super-secret-session-key-here
+   NODE_ENV=development
    ```
    
-   > **Important:** Replace the MongoDB URI with your actual connection string and use a strong random string for SESSION_SECRET.
+   > **Important:** Replace the MongoDB URI with your actual connection string from MongoDB Atlas.
 
-4. **Start the development server**
+4. **Build Tailwind CSS**
    ```bash
-   npm start
+   npm run tailwind:build
    ```
 
-5. **Run Tailwind CSS in watch mode** (in a separate terminal)
+5. **Start the development server**
    ```bash
-   npm run tailwind
+   npm run dev
    ```
+   
+   This will start both the Express server and Tailwind CSS in watch mode.
 
 6. **Access the application**
    
@@ -110,51 +119,76 @@ A feature-rich AirBnB clone application built with Node.js, Express, MongoDB, an
    http://localhost:3000
    ```
 
+## 🚀 Deployment
+
+This application is deployed on [Render.com](https://render.com). For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+**Quick Deployment Steps:**
+1. Push code to GitHub
+2. Create a Web Service on Render
+3. Set environment variables (`MONGODB_URI`, `NODE_ENV=production`)
+4. Deploy automatically from GitHub
+
+**Build Command:** `npm install && npm run tailwind:build`  
+**Start Command:** `npm start`
+
 ## 📁 Project Structure
 
 ```
-yt-code/
-├── controllers/           # Route controllers
-│   ├── authController.js # Authentication logic (signup, login, logout)
-│   ├── hostController.js # Host-specific operations
-│   ├── storeController.js# Guest operations and bookings
-│   └── errors.js         # Error handling
-├── models/               # Mongoose models
-│   ├── user.js          # User schema (with roles and favourites)
-│   ├── home.js          # Home/Property schema
-│   └── booking.js       # Booking schema
-├── routes/               # Express routes
-│   ├── authRouter.js    # Auth routes (signup, login, logout)
-│   ├── hostRouter.js    # Host routes (protected)
-│   └── storeRouter.js   # Guest routes
-├── views/                # EJS templates
-│   ├── auth/            # Authentication pages
-│   │   ├── login.ejs   # Login page
-│   │   └── signup.ejs  # Signup page with role selection
-│   ├── host/            # Host pages (add/edit/list homes)
-│   ├── store/           # Guest pages
-│   │   ├── home-list.ejs      # Browse homes
-│   │   ├── home-detail.ejs    # Home details
-│   │   ├── favourite-list.ejs # Favourites
-│   │   ├── reserve.ejs        # Booking form
-│   │   └── bookings.ejs       # View bookings
-│   └── partials/        # Reusable components
-│       ├── head.ejs     # HTML head with Tailwind
-│       ├── nav.ejs      # Role-based navigation
-│       ├── favourites.ejs# Favourite button
-│       └── delete.ejs   # Delete button
-├── public/               # Static files
-│   ├── output.css       # Compiled Tailwind CSS
-│   └── home.css         # Custom styles
-├── utils/                # Utility functions
-│   └── pathUtil.js      # Path helpers
-├── middleware/           # Custom middleware (coming soon)
-├── app.js                # Express app setup & middleware
-├── .env                  # Environment variables (not in repo)
-├── .gitignore
-├── nodemon.json         # Nodemon configuration
-├── tailwind.config.js   # Tailwind configuration
-└── package.json         # Dependencies and scripts
+airbnb_clone/
+├── controllers/              # Route controllers
+│   ├── authController.js    # Authentication (signup, login, logout)
+│   ├── hostController.js    # Host operations (add/edit/delete homes)
+│   ├── storeController.js   # Guest operations (browse, favourites, bookings)
+│   └── errors.js            # Error handling (404 page)
+├── models/                   # Mongoose models
+│   ├── user.js              # User schema (roles, favourites, bookings)
+│   ├── home.js              # Property schema
+│   └── booking.js           # Booking schema
+├── routes/                   # Express routes
+│   ├── authRouter.js        # Auth routes (signup, login, logout)
+│   ├── hostRouter.js        # Host routes (protected, role-based)
+│   └── storeRouter.js       # Guest routes (browse, favourites, bookings)
+├── views/                    # EJS templates
+│   ├── auth/                # Authentication pages
+│   │   ├── login.ejs        # Login page
+│   │   └── signup.ejs       # Signup page with role selection
+│   ├── host/                # Host dashboard pages
+│   │   ├── edit-home.ejs    # Edit property form
+│   │   ├── home-added.ejs   # Success confirmation
+│   │   └── host-home-list.ejs # List of hosted properties
+│   ├── store/               # Guest pages
+│   │   ├── index.ejs        # Homepage with all properties
+│   │   ├── home-list.ejs    # Browse properties
+│   │   ├── home-detail.ejs  # Property details
+│   │   ├── favourite-list.ejs # Favourites list
+│   │   ├── reserve.ejs      # Booking form
+│   │   └── bookings.ejs     # View bookings
+│   ├── partials/            # Reusable components
+│   │   ├── head.ejs         # HTML head with Tailwind CSS
+│   │   ├── nav.ejs          # Role-based navigation
+│   │   ├── favourites.ejs   # Favourite button component
+│   │   └── delete.ejs       # Delete button component
+│   ├── 404.ejs              # 404 error page
+│   └── input.css            # Tailwind CSS source
+├── public/                   # Static files
+│   ├── output.css           # Compiled Tailwind CSS
+│   ├── home.css             # Custom styles
+│   └── uploads/             # Uploaded property images
+│       └── .gitkeep         # Preserve directory in git
+├── utils/                    # Utility functions
+│   ├── pathUtil.js          # Path helpers
+│   ├── fileUpload.js        # Multer configuration
+│   └── fileHelper.js        # File deletion utility
+├── app.js                    # Express app setup & middleware
+├── .env                      # Environment variables (not in repo)
+├── .gitignore               # Git ignore rules
+├── nodemon.json             # Nodemon configuration
+├── tailwind.config.js       # Tailwind configuration
+├── postcss.config.js        # PostCSS configuration
+├── package.json             # Dependencies and scripts
+├── README.md                # Project documentation
+└── DEPLOYMENT.md            # Deployment guide
 ```
 
 ## 🗄️ Database Schema
@@ -183,7 +217,7 @@ yt-code/
   price: Number,            // Required (per night)
   location: String,         // Required
   rating: Number,           // Required (1-5)
-  photoPath: String,         // Image URL
+  photoPath: String,        // Image path (e.g., '/uploads/1234567890-image.jpg')
   description: String,      // Property description
   createdAt: Date,
   updatedAt: Date
@@ -196,11 +230,10 @@ yt-code/
   _id: ObjectId,
   user: ObjectId,           // Reference to User
   home: ObjectId,           // Reference to Home
-  checkInDate: Date,        // Required
-  checkOutDate: Date,       // Required
-  numberOfGuests: Number,   // Required
-  totalPrice: Number,       // Calculated (nights × price)
-  status: String,           // 'pending', 'confirmed', 'cancelled'
+  checkIn: Date,            // Check-in date
+  checkOut: Date,           // Check-out date
+  totalPrice: Number,       // Calculated (nights × price per night)
+  status: String,           // 'confirmed', 'pending', 'cancelled'
   createdAt: Date,
   updatedAt: Date
 }
@@ -212,7 +245,7 @@ yt-code/
 |----------|-------------|----------|---------|
 | `MONGODB_URI` | MongoDB Atlas connection string | Yes | `mongodb+srv://user:pass@cluster.mongodb.net/airbnb` |
 | `PORT` | Server port | No (default: 3000) | `3000` |
-| `SESSION_SECRET` | Secret key for session encryption | Yes | `my-super-secret-key-12345` |
+| `NODE_ENV` | Environment mode | No | `development` or `production` |
 
 ## 📝 Available Scripts
 
@@ -220,14 +253,14 @@ yt-code/
 # Start the server (production)
 npm start
 
-# Start the server with nodemon (development)
+# Start the server with nodemon and Tailwind watch (development)
 npm run dev
 
 # Run Tailwind CSS in watch mode
 npm run tailwind
 
-# Build Tailwind CSS once
-npm run build:css
+# Build Tailwind CSS (minified for production)
+npm run tailwind:build
 ```
 
 ## 🌐 API Endpoints
@@ -252,36 +285,67 @@ npm run build:css
 - `POST /cancel-booking/:bookingId` - Cancel a booking (requires login)
 
 ### Host Routes (Protected - Host Only)
-- `GET /host/add-home` - Add new home form (requires host role)
-- `POST /host/add-home` - Create new home (requires host role)
-- `GET /host/host-home-list` - View all hosted homes (requires host role)
-- `GET /host/edit-home/:homeId` - Edit home form (requires host role)
-- `POST /host/edit-home/:homeId` - Update home (requires host role)
-- `POST /host/delete-home/:homeId` - Delete home (requires host role)
+- `GET /host/add-home` - Add new property form (requires host role)
+- `POST /host/add-home` - Create new property with image upload (requires host role)
+- `GET /host/host-home-list` - View all hosted properties (requires host role)
+- `GET /host/edit-home/:homeId` - Edit property form (requires host role)
+- `POST /host/edit-home/:homeId` - Update property with optional image update (requires host role)
+- `POST /host/delete-home/:homeId` - Delete property and associated image (requires host role)
 
-## 🚧 Ongoing Development
+## 🎯 Key Features Implemented
 
-### Current Status: ✅ MVP Complete
+### ✅ Completed Features
+- ✅ User authentication with bcrypt password hashing
+- ✅ Role-based access control (Guest/Host)
+- ✅ Session management with MongoDB store
+- ✅ Image upload with Multer (file validation, size limits)
+- ✅ Automatic image cleanup on delete/update
+- ✅ Complete booking system with price calculation
+- ✅ Favourites functionality
+- ✅ CRUD operations for properties
+- ✅ Responsive UI with Tailwind CSS
+- ✅ Error handling and validation
+- ✅ Production deployment on Render
 
-### Recently Completed
-- ✅ Migrated from local JSON storage to MongoDB Atlas
-- ✅ Implemented CRUD operations for homes
-- ✅ Added favourites functionality
-- ✅ Converted callbacks to promises
-- ✅ Added description field to homes
-- ✅ Improved error handling
+## 🔮 Future Enhancements
 
-### In Progress
-- 🔄 User authentication system
-- 🔄 Image upload functionality
-- 🔄 Booking system
+- ⏳ User profiles and avatars
+- ⏳ Property reviews and ratings system
+- ⏳ Advanced search and filters (location, price range, amenities)
+- ⏳ Payment gateway integration
+- ⏳ Email notifications
+- ⏳ Admin dashboard for platform management
+- ⏳ Real-time chat between hosts and guests
+- ⏳ Property availability calendar
 
-### Planned Features
-- ⏳ User profiles
-- ⏳ Reviews and ratings
-- ⏳ Search and filters
-- ⏳ Payment integration
-- ⏳ Responsive design improvements
-- ⏳ Admin dashboard
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 👨‍💻 Author
+
+**Arindam Roy**
+- GitHub: [@Arindam-Roy2004](https://github.com/Arindam-Roy2004)
+- Email: royarindam2402@gmail.com
+
+## 🙏 Acknowledgments
+
+- Inspired by Airbnb's user experience
+- Built as a learning project for full-stack development
+- Thanks to the open-source community for amazing tools and libraries
+
+---
+
+**⭐ If you found this project helpful, please give it a star!**
 
 
