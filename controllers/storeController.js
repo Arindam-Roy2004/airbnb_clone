@@ -120,10 +120,10 @@ exports.getHomesDetails = async (req, res, next) => {
   //     console.log("Error fetching home:", err);
   //     res.status(500).send("Error loading home");
   //   });
-  const homeId = req.params.homeId;
+  const slug = req.params.slug;
 
   try {
-    const home = await Home.findById(homeId);
+    const home = await Home.findOne({ slug: slug });
     if (!home) {
       return res.status(404).render("store/404", {
         pageTitle: "Home Not Found",
@@ -246,8 +246,8 @@ exports.postDeleteFavourite = async (req, res, next) => {
 
 exports.getBookingPage = async (req, res, next) => {
   try {
-    const homeId = req.params.homeId;
-    const home = await Home.findById(homeId);
+    const slug = req.params.slug;
+    const home = await Home.findOne({ slug: slug });
 
     if (!home) {
       return res.status(404).render("store/404", {

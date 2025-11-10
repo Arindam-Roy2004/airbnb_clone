@@ -52,10 +52,17 @@ module.exports = class Home {
 **/
 
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 // const Fav = require('./favourites');
 
 const homeSchema = mongoose.Schema(
   {
+    slug: {
+      type: String,
+      unique: true,
+      default: () => uuidv4(),
+      index: true 
+    },
     houseName: {
       type: String,
       required: true
