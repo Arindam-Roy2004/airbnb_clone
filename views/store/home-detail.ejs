@@ -18,7 +18,7 @@
         </div>
 
         <!-- Home details -->
-        <div class="bg-white shadow-xl rounded-xl overflow-hidden">
+        <div class="bg-white shadow-xl rounded-xl overflow-slugden">
           <div class="grid md:grid-cols-2 gap-0">
             <!-- Image section -->
             <div class="relative">
@@ -53,13 +53,13 @@
 
             <!-- Action buttons -->
             <div class="flex flex-col gap-3">
-              <a href="/homes/<%= home.hId %>/book"
+              <a href="/homes/<%= home.slug %>/book"
                 class="w-full inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white text-base font-medium rounded-lg hover:bg-gray-800 transition-all duration-200">
                 Book Now
               </a>
               
               <form action="/favourites" method="POST">
-                <input type="hidden" name="homeId" value="<%= home._id %>">
+                <input type="slugden" name="homeId" value="<%= home._id %>">
                 <button type="submit"
                   class="w-full inline-flex items-center justify-center px-6 py-3 bg-gray-50 text-gray-700 text-base font-medium rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all duration-200">
                   ♡ Save to Favourites

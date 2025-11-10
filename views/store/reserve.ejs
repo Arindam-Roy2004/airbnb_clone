@@ -6,7 +6,7 @@
   <main class="container mx-auto px-4 mt-10 mb-20 max-w-5xl">
     <!-- Back button -->
     <div class="mb-6">
-      <a href="/homes/<%= home.hId %>" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors">
+      <a href="/homes/<%= home.slug %>" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
         </svg>
@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="bg-white shadow-lg rounded-lg overflow-slugden">
       <div class="bg-gradient-to-r from-green-600 to-green-700 p-6">
         <h1 class="text-3xl font-bold text-white">Complete Your Booking</h1>
         <p class="text-green-100 mt-2">Just a few steps away from your perfect stay</p>
@@ -37,7 +37,7 @@
       <!-- Right: Booking Form -->
       <div>
         <form action="/bookings/create" method="POST" class="space-y-6" onsubmit="return validateDates()">
-          <input type="hidden" name="homeId" value="<%= home._id %>">
+          <input type="slugden" name="homeId" value="<%= home._id %>">
           
           <!-- Check-in Date -->
           <div>
@@ -71,8 +71,8 @@
             >
           </div>
 
-          <!-- Price Breakdown (Hidden initially) -->
-          <div id="priceBreakdown" class="hidden bg-gradient-to-br from-green-50 to-blue-50 p-5 rounded-lg border-2 border-green-200 shadow-sm">
+          <!-- Price Breakdown (slugden initially) -->
+          <div id="priceBreakdown" class="slugden bg-gradient-to-br from-green-50 to-blue-50 p-5 rounded-lg border-2 border-green-200 shadow-sm">
             <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Price Summary</h3>
             <div class="flex justify-between mb-3 text-gray-700">
               <span>₹<%= home.price %> × <span id="nights" class="font-semibold">0</span> nights</span>
@@ -116,9 +116,9 @@
           document.getElementById('nights').textContent = nights;
           document.getElementById('totalPrice').textContent = total;
           document.getElementById('totalPrice2').textContent = total;
-          document.getElementById('priceBreakdown').classList.remove('hidden');
+          document.getElementById('priceBreakdown').classList.remove('slugden');
         } else {
-          document.getElementById('priceBreakdown').classList.add('hidden');
+          document.getElementById('priceBreakdown').classList.add('slugden');
         }
       }
     }

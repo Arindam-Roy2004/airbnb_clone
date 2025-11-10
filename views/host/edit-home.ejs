@@ -7,7 +7,7 @@
         <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
           <%= editMode ? 'Edit' : 'Register' %> Your Home on AirBnB
         </h1>
-        <form action="<%= editMode ? '/host/edit-home/' + home.hId : '/host/add-home' %>" method="POST"
+        <form action="<%= editMode ? '/host/edit-home/' + home.slug : '/host/add-home' %>" method="POST"
           enctype="multipart/form-data" class="max-w-md mx-auto">
 
               <!-- Current Image Display (only in edit mode) -->
