@@ -27,6 +27,6 @@ storeRouter.post("/bookings/delete/:bookingId", requireLogin, storeController.po
 storeRouter.get("/bookings",requireLogin, storeController.getBookings); 
 storeRouter.get("/favourites",requireLogin, storeController.getFavouriteList);
 storeRouter.post("/favourites",requireLogin, storeController.postFavouriteList);
-storeRouter.post("/favourites/delete/:homeId", storeController.postDeleteFavourite);
+storeRouter.post("/favourites/delete/:homeId",requireLogin,storeController.postDeleteFavourite);
 
 module.exports = storeRouter;
