@@ -90,7 +90,7 @@ exports.postAddHome = async (req, res, next) => {
 };
 
 exports.getEditHome = async (req, res, next) => {
-  const homeId = req.params.homeId;
+  const slug = req.params.slug;
   const editMode = req.query.editing === 'true';
 
   // Home.findById(homeId)
