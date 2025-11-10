@@ -187,8 +187,8 @@ exports.postFavouriteList = async (req, res, next) => {
   // }
   // res.redirect("/favourites");
   try {
+    if (!req.body.homeId) return res.status(400).send("Home ID is required");
     const homeId = req.body.homeId;
-    if (!homeId) return res.status(400).send("Home ID is required");
     if (!req.session.user._id) return res.status(401).send("User not authenticated");
     const userId = req.session.user._id;
 
