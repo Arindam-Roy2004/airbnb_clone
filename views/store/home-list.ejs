@@ -47,7 +47,7 @@
                   </a>
                   
                   <form action="/favourites" method="POST" class="flex-1">
-                    <input type="slugden" name="homeId" value="<%= home._id %>">
+                    <input type="hidden" name="homeId" value="<%= home._id %>">
                     <button type="submit"
                       class="w-full inline-flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all duration-200">
                       ♡ Save
