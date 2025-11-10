@@ -189,7 +189,7 @@ exports.postFavouriteList = async (req, res, next) => {
   try {
     if (!req.body.homeId) return res.status(400).send("Home ID is required");
     const homeId = req.body.homeId;
-    if (!req.session.user._id) return res.status(401).send("User not authenticated");
+    if (!req.session.user) return res.status(401).send("User not authenticated");
     const userId = req.session.user._id;
 
     const User = await user.findById(userId);
