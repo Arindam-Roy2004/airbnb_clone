@@ -123,7 +123,6 @@ exports.getEditHome = async (req, res, next) => {
       pageTitle: "Edit Home",
       currentPage: "editHome",
       editMode: editMode,
-      slug: slug,
       home: home,
     });
   }
