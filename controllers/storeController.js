@@ -125,7 +125,7 @@ exports.getHomesDetails = async (req, res, next) => {
   try {
     const home = await Home.findOne({ slug: slug });
     if (!home) {
-      return res.status(404).render("store/404", {
+      return res.status(404).render("404", {
         pageTitle: "Home Not Found",
         currentPage: ""
       });
@@ -140,8 +140,8 @@ exports.getHomesDetails = async (req, res, next) => {
   }
   catch (err) {
     console.log("Error fetching home:", err);
-    res.status(500).send("Error loading home").render("store/404", {
-      pageTitle: "Home Not Found",
+    res.status(500).render("404", {
+      pageTitle: "Error Loading Home",
       currentPage: ""
     });
   }
@@ -158,7 +158,7 @@ exports.getFavouriteList = async (req, res, next) => {
   try {
     const User = await user.findById(userId).populate('favourites');
     if (!User) {
-      return res.status(404).render("store/404", {
+      return res.status(404).render("404", {
         pageTitle: "User Not Found",
         currentPage: ""
       });
@@ -255,7 +255,7 @@ exports.getBookingPage = async (req, res, next) => {
     const home = await Home.findOne({ slug: slug });
 
     if (!home) {
-      return res.status(404).render("store/404", {
+      return res.status(404).render("404", {
         pageTitle: "Home Not Found",
         currentPage: ""
       });
