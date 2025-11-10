@@ -90,7 +90,7 @@ exports.postAddHome = async (req, res, next) => {
 };
 
 exports.getEditHome = async (req, res, next) => {
-  const slug = req.params.slug;
+  const hId = req.params.hId;
   const editMode = req.query.editing === 'true';
 
   // Home.findById(homeId)
@@ -113,7 +113,7 @@ exports.getEditHome = async (req, res, next) => {
   //     res.status(500).send("Error loading home");
   //   });
   try {
-    const home = await Home.findOne({ slug: slug });
+    const home = await Home.findOne({ hId: hId });
     if (!home) {
       console.log("Home not found for editing");
       return res.redirect("/host/host-home-list");
@@ -134,7 +134,7 @@ exports.getEditHome = async (req, res, next) => {
 
 exports.postEditHome = async (req, res, next) => {
   console.log(req.body);
-  const slug = req.params.slug;
+  const hId = req.params.hId;
   const { houseName, price, location, rating, description } = req.body;
   // Home.findById(id)
   //   .then(home => {
@@ -160,7 +160,7 @@ exports.postEditHome = async (req, res, next) => {
   //   })
   //   .catch((err) => console.log("Error finding home for update:", err));
   try {
-    const home = await Home.findOne({ slug: slug });
+    const home = await Home.findOne({ hId: hId });
     if (!home) {
       console.log("Home not found for updating");
       return res.redirect("/host/host-home-list");
@@ -192,7 +192,7 @@ exports.postEditHome = async (req, res, next) => {
 };
 
 exports.postDeleteHome = async (req, res, next) => {
-  const slug = req.params.slug;
+  const hId = req.params.hId;
 
   // Home.findByIdAndDelete(homeId)
   //   .then(() => {
@@ -204,7 +204,7 @@ exports.postDeleteHome = async (req, res, next) => {
   //     res.status(500).send("Error deleting home");
   //   });
   try{
-    const home = await Home.findOne({ slug: slug });
+    const home = await Home.findOne({ hId: hId });
     if(!home){
       console.log("Home not found for deletion");
       return res.redirect("/host/host-home-list");
@@ -212,7 +212,7 @@ exports.postDeleteHome = async (req, res, next) => {
     if(home.photoPath){
       await deleteImage(home.photoPath);
     }
-    await Home.findOneAndDelete({ slug: slug });
+    await Home.findOneAndDelete({ hId: hId });
     console.log("Home deleted successfully");
     res.redirect("/host/host-home-list");
   }

@@ -120,10 +120,10 @@ exports.getHomesDetails = async (req, res, next) => {
   //     console.log("Error fetching home:", err);
   //     res.status(500).send("Error loading home");
   //   });
-  const slug = req.params.slug;
+  const hId = req.params.hId;
 
   try {
-    const home = await Home.findOne({ slug: slug });
+    const home = await Home.findOne({ hId: hId });
     if (!home) {
       return res.status(404).render("store/404", {
         pageTitle: "Home Not Found",
@@ -211,7 +211,7 @@ exports.postFavouriteList = async (req, res, next) => {
 };
 
 exports.postDeleteFavourite = async (req, res, next) => {
-  const slug = req.params.slug;
+  const hId = req.params.hId;
   // console.log(homeId);
   // const userId = req.session.user._id;
   // const User = await user.findById(userId)
@@ -221,10 +221,10 @@ exports.postDeleteFavourite = async (req, res, next) => {
   // }
   // res.redirect("/favourites");
   try {
-    if (!slug) return res.status(400).send("Home slug is required");
+    if (!hId) return res.status(400).send("Home hId is required");
     
-    // Find home by slug to get its _id for favourites array
-    const home = await Home.findOne({ slug: slug });
+    // Find home by hId to get its _id for favourites array
+    const home = await Home.findOne({ hId: hId });
     if (!home) return res.status(404).send("Home not found");
     
     const userId = req.session.user._id;
@@ -251,8 +251,8 @@ exports.postDeleteFavourite = async (req, res, next) => {
 
 exports.getBookingPage = async (req, res, next) => {
   try {
-    const slug = req.params.slug;
-    const home = await Home.findOne({ slug: slug });
+    const hId = req.params.hId;
+    const home = await Home.findOne({ hId: hId });
 
     if (!home) {
       return res.status(404).render("store/404", {

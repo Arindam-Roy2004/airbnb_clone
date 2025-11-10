@@ -16,10 +16,10 @@ const requireLogin = (req, res, next) => {
 // Existing routes
 storeRouter.get("/", storeController.getIndex);
 storeRouter.get("/homes", storeController.getHomes);
-storeRouter.get("/homes/:slug", storeController.getHomesDetails);
+storeRouter.get("/homes/:hId", storeController.getHomesDetails);
 
 // ADD NEW BOOKING ROUTES
-storeRouter.get("/homes/:slug/book", requireLogin, storeController.getBookingPage);
+storeRouter.get("/homes/:hId/book", requireLogin, storeController.getBookingPage);
 storeRouter.post("/bookings/create", requireLogin, storeController.postCreateBooking);
 storeRouter.post("/bookings/delete/:bookingId", requireLogin, storeController.postCancelBooking);
 
@@ -27,6 +27,6 @@ storeRouter.post("/bookings/delete/:bookingId", requireLogin, storeController.po
 storeRouter.get("/bookings",requireLogin, storeController.getBookings); 
 storeRouter.get("/favourites",requireLogin, storeController.getFavouriteList);
 storeRouter.post("/favourites",requireLogin, storeController.postFavouriteList);
-storeRouter.post("/favourites/delete/:slug",requireLogin,storeController.postDeleteFavourite);
+storeRouter.post("/favourites/delete/:hId",requireLogin,storeController.postDeleteFavourite);
 
 module.exports = storeRouter;

@@ -1,4 +1,4 @@
-// Migration script to add UUID slugs to existing homes
+// Migration script to add UUID hIds to existing homes
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
@@ -7,14 +7,14 @@ require('dotenv').config();
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB');
-    return addSlugsToHomes();
+    return addhIdsToHomes();
   })
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
     process.exit(1);
   });
 
-async function addSlugsToHomes() {
+async function addhIdsToHomes() {
   try {
     const Home = mongoose.model('Home', new mongoose.Schema({
       houseName: String,
@@ -23,36 +23,36 @@ async function addSlugsToHomes() {
       rating: Number,
       photoPath: String,
       description: String,
-      slug: String
+      hId: String
     }));
 
-    // Find all homes without a slug
-    const homesWithoutSlug = await Home.find({ 
+    // Find all homes without a hId
+    const homesWithouthId = await Home.find({ 
       $or: [
-        { slug: { $exists: false } },
-        { slug: null },
-        { slug: '' }
+        { hId: { $exists: false } },
+        { hId: null },
+        { hId: '' }
       ]
     });
 
-    console.log(`Found ${homesWithoutSlug.length} homes without slugs`);
+    console.log(`Found ${homesWithouthId.length} homes without hIds`);
 
-    if (homesWithoutSlug.length === 0) {
-      console.log('All homes already have slugs!');
+    if (homesWithouthId.length === 0) {
+      console.log('All homes already have hIds!');
       await mongoose.connection.close();
       process.exit(0);
     }
 
-    // Add slug to each home
+    // Add hId to each home
     let updated = 0;
-    for (const home of homesWithoutSlug) {
-      home.slug = uuidv4();
+    for (const home of homesWithouthId) {
+      home.hId = uuidv4();
       await home.save();
       updated++;
-      console.log(`Updated home "${home.houseName}" with slug: ${home.slug}`);
+      console.log(`Updated home "${home.houseName}" with hId: ${home.hId}`);
     }
 
-    console.log(`\n✅ Successfully added slugs to ${updated} homes`);
+    console.log(`\n✅ Successfully added hIds to ${updated} homes`);
     
     // Close connection
     await mongoose.connection.close();

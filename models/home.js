@@ -57,7 +57,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const homeSchema = mongoose.Schema(
   {
-    slug: {
+    hId: {
       type: String,
       unique: true,
       default: () => uuidv4(),
