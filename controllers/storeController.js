@@ -211,7 +211,7 @@ exports.postFavouriteList = async (req, res, next) => {
 };
 
 exports.postDeleteFavourite = async (req, res, next) => {
-  const homeId = req.params.homeId;
+  const slug = req.params.slug;
   // console.log(homeId);
   // const userId = req.session.user._id;
   // const User = await user.findById(userId)
@@ -221,15 +221,20 @@ exports.postDeleteFavourite = async (req, res, next) => {
   // }
   // res.redirect("/favourites");
   try {
-    if (!homeId) return res.status(400).send("Home ID is required");
+    if (!slug) return res.status(400).send("Home slug is required");
+    
+    // Find home by slug to get its _id for favourites array
+    const home = await Home.findOne({ slug: slug });
+    if (!home) return res.status(404).send("Home not found");
+    
     const userId = req.session.user._id;
     if (!userId) return res.status(401).send("User not authenticated");
     const User = await user.findById(userId);
 
     if (!User) return res.status(404).send("User not found");
 
-    if (User.favourites.includes(homeId)) {
-      User.favourites.pull(homeId);
+    if (User.favourites.includes(home._id)) {
+      User.favourites.pull(home._id);
       await User.save();
       return res.redirect("/favourites");
     }
