@@ -10,6 +10,8 @@
           </h2>
           <p class="text-gray-600 text-lg">Your saved homes</p>
         </div>
+        
+        <% if (favHomes && favHomes.length > 0) { %>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
           <% favHomes.forEach(home=> { %>
             <div class="group cursor-pointer">
@@ -44,6 +46,18 @@
             </div>
           <% }) %>
         </div>
+        <% } else { %>
+          <div class="text-center py-20">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
+              <i class="fa-regular fa-heart text-3xl text-gray-400"></i>
+            </div>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-2">No saves yet</h2>
+            <p class="text-gray-600 mb-6 max-w-md mx-auto">As you search, click the heart icon to save your favorite places and experiences to a wishlist.</p>
+            <a href="/homes" class="inline-block px-6 py-3 bg-airbnb hover:bg-airbnb-dark text-white font-semibold rounded-lg transition">
+              Start exploring
+            </a>
+          </div>
+        <% } %>
       </main>
   </body>
 

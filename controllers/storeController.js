@@ -198,11 +198,9 @@ exports.postFavouriteList = async (req, res, next) => {
     if (!User.favourites.includes(homeId)) {
       User.favourites.push(homeId);
       await User.save();
-      return res.redirect("/favourites");
     }
-    else {
-      return res.status(400).send("Home already in favourites");
-    }
+    
+    return res.redirect("/favourites");
   }
   catch (err) {
     console.log("Error adding to favourites:", err);
