@@ -4,104 +4,85 @@
     <%- include('../partials/nav') %>
 
     <main class="container mx-auto flex items-center justify-center min-h-[calc(100vh-80px)] py-4">
-      <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
+      <div class="bg-white rounded-xl shadow-xl border border-gray-200 p-8 w-full max-w-md">
         <!-- Header (compact) -->
-        <div class="text-center mb-4">
-          <div class="inline-flex items-center justify-center w-12 h-12 bg-red-500 rounded-full mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <h1 class="text-2xl font-bold text-gray-800">Welcome Back</h1>
-          <p class="text-gray-600 text-sm mt-1">Login to your account</p>
+        <div class="text-center mb-6 border-b border-gray-200 pb-4">
+          <h1 class="text-lg font-bold text-gray-800">Log in or sign up</h1>
+        </div>
+
+        <div class="mb-6">
+           <h2 class="text-2xl font-semibold text-gray-800 mb-2">Welcome to Airbnb</h2>
         </div>
 
         <!-- Login Form (compact) -->
         <form action="/login" method="POST" class="space-y-4">
           <!-- Error Display -->
           <% if(typeof errors !== 'undefined' && errors.length > 0){ %>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-              <strong class="font-bold">Error!</strong>
+            <div class="flex items-center gap-2 text-red-600 text-sm mb-2 px-1">
+               <i class="fa-solid fa-circle-exclamation"></i>
               <% if(Array.isArray(errors)) { %>
-                <ul class="list-disc list-inside">
-                  <% errors.forEach(function(error) { %>
-                    <li class="text-sm"><%= error %></li>
-                  <% }); %>
-                </ul>
+                  <span><%= errors[0] %></span>
               <% } else { %>
-                <p class="text-sm"><%= errors %></p>
+                <span><%= errors %></span>
               <% } %>
             </div>
           <% } %>
 
           <!-- Email Field -->
-          <div>
-            <label for="email" class="block text-xs font-medium text-gray-700 mb-1">Email Address</label>
-            <div class="relative">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-              </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-                value="<%= oldInput ? oldInput.email : '' %>"
-                class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300"
-              />
-            </div>
+          <div class="border border-gray-400 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-black focus-within:border-black">
+             <div class="px-3 pt-2">
+                <label for="email" class="block text-xs text-gray-500">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email address"
+                  class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2"
+                  required
+                />
+             </div>
+             <div class="border-t border-gray-400 px-3 pt-2">
+                <label for="password" class="block text-xs text-gray-500">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2"
+                  required
+                />
+             </div>
           </div>
 
-          <!-- Password Field -->
-          <div>
-            <label for="password" class="block text-xs font-medium text-gray-700 mb-1">Password</label>
-            <div class="relative">
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter your password"
-                required
-                class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-300"
-              />
-            </div>
-          </div>
+          <p class="text-xs text-gray-500 mt-2">
+             We'll call or text you to confirm your number. Standard message and data rates apply. <a href="#" class="underline font-medium text-gray-800">Privacy Policy</a>
+          </p>
 
-          <!-- Remember Me & Forgot Password (compact) -->
-          <div class="flex items-center justify-between">
-            <label class="flex items-center space-x-2">
-              <input type="checkbox" id="remember" name="remember"
-                class="h-4 w-4 text-red-500 focus:ring-red-500 border-gray-300 rounded" />
-              <span class="text-xs text-gray-700">Remember me</span>
-            </label>
-            <a href="/forgot-password" class="text-xs text-red-500 hover:text-red-600 font-medium">
-              Forgot Password?
-            </a>
-          </div>
-
-          <!-- Submit Button -->
           <button
             type="submit"
-            class="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-300 transition duration-300"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-airbnb hover:bg-airbnb-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition"
           >
-            Login
+            Continue
           </button>
         </form>
 
-        <!-- Sign Up Link (compact) -->
-        <p class="text-center text-xs text-gray-600 mt-4">
-          Don't have an account?
-          <a href="/signup" class="text-red-500 hover:text-red-600 font-semibold">Sign up</a>
-        </p>
+        <div class="mt-6">
+           <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                 <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                 <span class="px-2 bg-white text-gray-500 text-xs">or</span>
+              </div>
+           </div>
+
+           <div class="mt-6 grid gap-3">
+              <a href="/signup" class="w-full flex items-center justify-center px-4 py-3 border border-gray-800 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition relative">
+                 <i class="fa-regular fa-envelope absolute left-4 text-lg"></i>
+                 <span>Sign up with Email</span>
+              </a>
+           </div>
+        </div>
       </div>
     </main>
   </body>
