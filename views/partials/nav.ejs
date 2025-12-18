@@ -1,67 +1,77 @@
-<header class="bg-red-500 text-white p-4 shadow-md">
-  <nav class="container mx-auto flex justify-between items-center">
-    <!-- Left side - Navigation Links -->
-    <ul class="flex items-center space-x-4">
-      <li>
-        <a href="/"
-          class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">airbnb</a>
-      </li>
-      <% if(isLoggedIn) { %>
-        <!-- Guest tabs - only show if user is guest or no role -->
-        <% if(user && user.role === 'guest') { %>
-          <li>
-            <a href="/homes"
-              class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Homes-List</a>
-          </li>
-          <li>
-            <a href="/favourites"
-              class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Favourites</a>
-          </li>
-          <li>
-            <a href="/bookings"
-              class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Bookings</a>
-          </li>
-        <% } %>
-        
-        <!-- Host tabs - only show if user is host -->
-        <% if(user && user.role === 'host') { %>
-          <li>
-            <a href="/host/host-home-list"
-              class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Host
-              Homes</a>
-          </li>
-          <li>
-            <a href="/host/add-home"
-              class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Add
-              Home</a>
-          </li>
-        <% } %>
-      <% } %>
-    </ul>
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <nav class="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+    <!-- Left side - Logo -->
+    <a href="/" class="flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false" style="display: block; height: 32px; width: 32px; fill: currentcolor;" class="text-airbnb">
+        <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 3.162.723 4.691l-.018.149-.047.255c-.67 3.164-2.885 5.576-5.803 6.334l-.293.065-.36.063-1.114.15-.369.032c-2.645.15-5.29-.482-7.891-1.866l-.529-.295-.529.295c-2.602 1.384-5.246 2.016-7.891 1.866l-.369-.032-1.114-.15-.36-.063-.293-.065c-2.918-.758-5.133-3.17-5.803-6.334l-.047-.255-.018-.149c-.187-1.529.056-3.1.723-4.691l.145-.353c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C12.537 1.963 13.992 1 16 1zm0 2c-1.239 0-2.053.539-2.987 2.211l-.523 1.008c-1.926 3.776-6.06 12.43-7.031 14.692l-.345.836c-.427 1.071-.573 2.02-.438 2.952l.023.15.034.178c.462 2.1 1.935 3.668 3.821 4.154l.28.06.346.058.811.108.346.03c2.037.116 4.161-.369 6.343-1.423l.521-.266.521.266c2.182 1.054 4.306 1.539 6.343 1.423l.346-.03.811-.108.346-.058.28-.06c1.886-.486 3.359-2.054 3.821-4.154l.034-.178.023-.15c.135-.932-.011-1.881-.438-2.952l-.345-.836c-.971-2.262-5.105-10.916-7.031-14.692l-.523-1.008C18.053 3.539 17.24 3 16 3zm0 5c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 2c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"></path>
+      </svg>
+      <span class="text-airbnb font-bold text-xl hidden md:block">airbnb</span>
+    </a>
 
-    <!-- Right side - Login/Logout Button -->
-    <div class="flex items-center">
-      <% if(!isLoggedIn){ %>
-        <a href="/login"
-          class="<%= currentPage === 'login' ? 'bg-white text-red-500' : 'bg-red-600 hover:bg-white hover:text-red-500' %> py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-          </svg>
-          <span>Login</span>
-        </a>
+    <!-- Center - Search Bar (Mock) -->
+    <div class="hidden md:flex items-center border border-gray-300 rounded-full py-2.5 px-4 shadow-sm hover:shadow-md transition cursor-pointer">
+      <div class="text-sm font-medium px-4 border-r border-gray-300">Anywhere</div>
+      <div class="text-sm font-medium px-4 border-r border-gray-300">Any week</div>
+      <div class="text-sm text-gray-500 px-4">Add guests</div>
+      <div class="bg-airbnb p-2 rounded-full text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Right side - Navigation Links -->
+    <div class="flex items-center gap-4">
+      <% if(isLoggedIn) { %>
+        <% if(user && user.role === 'host') { %>
+          <a href="/host/host-home-list" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Switch to hosting</a>
         <% } else { %>
-          <form action="/logout" method="POST">
-            <button type="submit"
-              class="bg-red-600 hover:bg-white hover:text-red-500 py-2 px-6 rounded-full font-semibold transition duration-300 flex items-center space-x-2 border-2 border-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                  d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                  clip-rule="evenodd" />
-              </svg>
-              <span>Logout</span>
-            </button>
-          </form>
+           <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Airbnb your home</a>
+        <% } %>
+      <% } else { %>
+         <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Airbnb your home</a>
+      <% } %>
+
+      <div class="relative group">
+        <button class="flex items-center gap-2 border border-gray-300 rounded-full p-1 pl-3 hover:shadow-md transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <div class="bg-gray-500 rounded-full p-1 text-white overflow-hidden">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-xl py-2 hidden group-hover:block z-50">
+          <% if(isLoggedIn) { %>
+            <div class="px-4 py-2 border-b border-gray-100">
+              <p class="font-semibold text-sm">Welcome back!</p>
+            </div>
+            <% if(user && user.role === 'guest') { %>
+              <a href="/homes" class="block px-4 py-2 text-sm hover:bg-gray-100">Homes</a>
+              <a href="/favourites" class="block px-4 py-2 text-sm hover:bg-gray-100">Favourites</a>
+              <a href="/bookings" class="block px-4 py-2 text-sm hover:bg-gray-100">Bookings</a>
+            <% } %>
+            <% if(user && user.role === 'host') { %>
+              <a href="/host/host-home-list" class="block px-4 py-2 text-sm hover:bg-gray-100">Manage Listings</a>
+              <a href="/host/add-home" class="block px-4 py-2 text-sm hover:bg-gray-100">Add a Home</a>
+            <% } %>
+            <div class="border-t border-gray-100 my-1"></div>
+            <form action="/logout" method="POST" class="w-full">
+              <button type="submit" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Log out</button>
+            </form>
+          <% } else { %>
+            <a href="/login" class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100">Log in</a>
+            <a href="/signup" class="block px-4 py-2 text-sm hover:bg-gray-100">Sign up</a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Airbnb your home</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Help Center</a>
           <% } %>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
