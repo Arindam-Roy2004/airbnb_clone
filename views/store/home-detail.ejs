@@ -98,50 +98,123 @@
                   </div>
 
                   <div class="border border-gray-400 rounded-lg mb-4 overflow-hidden">
-                     <div class="grid grid-cols-2 border-b border-gray-400">
-                        <div class="p-3 border-r border-gray-400">
-                           <div class="text-[10px] font-bold uppercase text-gray-700">Check-in</div>
-                           <div class="text-sm">Add date</div>
+                     <form action="/homes/<%= home.slug %>/book" method="GET" id="bookingForm">
+                        <div class="grid grid-cols-2 border-b border-gray-400">
+                           <div class="p-3 border-r border-gray-400">
+                              <label for="checkIn" class="text-[10px] font-bold uppercase text-gray-700 block">Check-in</label>
+                              <input type="date" id="checkIn" name="checkIn" min="<%= minDate %>" required class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
+                           </div>
+                           <div class="p-3">
+                              <label for="checkOut" class="text-[10px] font-bold uppercase text-gray-700 block">Checkout</label>
+                              <input type="date" id="checkOut" name="checkOut" min="<%= minDate %>" required class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
+                           </div>
                         </div>
                         <div class="p-3">
-                           <div class="text-[10px] font-bold uppercase text-gray-700">Checkout</div>
-                           <div class="text-sm">Add date</div>
+                           <div class="text-[10px] font-bold uppercase text-gray-700">Guests</div>
+                           <div class="text-sm">1 guest</div>
                         </div>
-                     </div>
-                     <div class="p-3">
-                        <div class="text-[10px] font-bold uppercase text-gray-700">Guests</div>
-                        <div class="text-sm">1 guest</div>
-                     </div>
+                     </form>
                   </div>
 
-                  <a href="/homes/<%= home.slug %>/book" class="block w-full bg-airbnb hover:bg-airbnb-dark text-white text-center font-semibold py-3 rounded-lg transition mb-4">
+                  <button type="submit" form="bookingForm" class="block w-full bg-airbnb hover:bg-airbnb-dark text-white text-center font-semibold py-3 rounded-lg transition mb-4">
                      Reserve
-                  </a>
+                  </button>
 
                   <p class="text-center text-sm text-gray-500 mb-4">You won't be charged yet</p>
 
-                  <div class="space-y-3 text-gray-600">
+                  <div id="priceBreakdown" class="space-y-3 text-gray-600 hidden">
                      <div class="flex justify-between">
-                        <span class="underline">₹<%= home.price %> x 5 nights</span>
-                        <span>₹<%= home.price * 5 %></span>
+                        <span class="underline">₹<%= home.price %> x <span id="nightCount">0</span> nights</span>
+                        <span>₹<span id="basePrice">0</span></span>
                      </div>
                      <div class="flex justify-between">
                         <span class="underline">Cleaning fee</span>
-                        <span>₹1,500</span>
+                        <span>₹<%= pricing.CLEANING_FEE.toLocaleString('en-IN') %></span>
                      </div>
                      <div class="flex justify-between">
                         <span class="underline">Service fee</span>
-                        <span>₹2,000</span>
+                        <span>₹<%= pricing.SERVICE_FEE.toLocaleString('en-IN') %></span>
+                     </div>
+                     <div class="border-t border-gray-200 mt-4 pt-4">
+                        <div class="flex justify-between text-gray-700 mb-2">
+                           <span>Subtotal</span>
+                           <span>₹<span id="subtotalPrice">0</span></span>
+                        </div>
+                        <div class="flex justify-between text-gray-700 mb-3">
+                           <span>Taxes (12%)</span>
+                           <span>₹<span id="taxAmount">0</span></span>
+                        </div>
+                        <div class="flex justify-between font-bold text-gray-900 text-lg border-t border-gray-200 pt-3">
+                           <span>Total</span>
+                           <span>₹<span id="totalPrice">0</span></span>
+                        </div>
                      </div>
                   </div>
-
-                  <div class="border-t border-gray-200 mt-4 pt-4 flex justify-between font-bold text-gray-900 text-lg">
-                     <span>Total before taxes</span>
-                     <span>₹<%= (home.price * 5) + 3500 %></span>
-                  </div>
+                  
+                  <!-- Hidden data for JS -->
+                  <div id="booking-data" data-price="<%= home.price %>" class="hidden"></div>
                </div>
             </div>
         </div>
+        
+        <script>
+          const checkInInput = document.getElementById('checkIn');
+          const checkOutInput = document.getElementById('checkOut');
+          const priceBreakdown = document.getElementById('priceBreakdown');
+          const nightCountSpan = document.getElementById('nightCount');
+          const basePriceSpan = document.getElementById('basePrice');
+          const totalPriceSpan = document.getElementById('totalPrice');
+          const bookingForm = document.getElementById('bookingForm');
+          const bookingData = document.getElementById('booking-data');
+          
+          const pricePerNight = Number(bookingData.dataset.price);
+          const cleaningFee = <%= pricing.CLEANING_FEE %>;
+          const serviceFee = <%= pricing.SERVICE_FEE %>;
+          const taxRate = <%= pricing.TAX_RATE %>;
+
+          function calculatePrice() {
+             const checkInDate = new Date(checkInInput.value);
+             const checkOutDate = new Date(checkOutInput.value);
+
+             if (checkInInput.value && checkOutInput.value && checkOutDate > checkInDate) {
+                const timeDiff = checkOutDate - checkInDate;
+                const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                
+                if (nights > 0) {
+                   const basePrice = nights * pricePerNight;
+                   const subtotal = basePrice + cleaningFee + serviceFee;
+                   const taxes = Math.round(subtotal * taxRate);
+                   const total = subtotal + taxes;
+
+                   nightCountSpan.textContent = nights;
+                   basePriceSpan.textContent = basePrice.toLocaleString('en-IN');
+                   document.getElementById('subtotalPrice').textContent = subtotal.toLocaleString('en-IN');
+                   document.getElementById('taxAmount').textContent = taxes.toLocaleString('en-IN');
+                   totalPriceSpan.textContent = total.toLocaleString('en-IN');
+                   
+                   priceBreakdown.classList.remove('hidden');
+                } else {
+                   priceBreakdown.classList.add('hidden');
+                }
+             } else {
+                priceBreakdown.classList.add('hidden');
+             }
+          }
+
+          checkInInput.addEventListener('change', function() {
+             checkOutInput.min = this.value;
+             calculatePrice();
+          });
+
+          checkOutInput.addEventListener('change', calculatePrice);
+
+          bookingForm.addEventListener('submit', function(e) {
+             if (!checkInInput.value || !checkOutInput.value) {
+                e.preventDefault();
+                alert('Please select check-in and check-out dates');
+             }
+          });
+        </script>
       <% } else { %>
         <div class="text-center py-16">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

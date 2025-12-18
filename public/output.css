@@ -859,8 +859,8 @@ video {
   max-width: 72rem;
 }
 
-.max-w-7xl {
-  max-width: 80rem;
+.max-w-\[1600px\] {
+  max-width: 1600px;
 }
 
 .max-w-md {
@@ -869,10 +869,6 @@ video {
 
 .max-w-xl {
   max-width: 36rem;
-}
-
-.max-w-\[1600px\] {
-  max-width: 1600px;
 }
 
 .flex-1 {
@@ -1128,6 +1124,11 @@ video {
 
 .border-transparent {
   border-color: transparent;
+}
+
+.border-green-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(74 222 128 / var(--tw-border-opacity));
 }
 
 .bg-airbnb {

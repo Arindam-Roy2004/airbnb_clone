@@ -2,6 +2,7 @@ const Home = require("../models/home");
 const Booking = require("../models/booking");
 // const Favourites = require("../models/favourites");
 const user = require("../models/user");
+const pricingConfig = require("../config/pricing");
 
 exports.getIndex = async (req, res, next) => {
   console.log("storeController -> session", req.session);
@@ -131,10 +132,13 @@ exports.getHomesDetails = async (req, res, next) => {
       });
     }
     else {
+      const today = new Date().toISOString().split('T')[0];
       res.render("store/home-detail", {
         home: home,
         pageTitle: "Home Details",
-        currentPage: "Home"
+        currentPage: "Home",
+        minDate: today,
+        pricing: pricingConfig
       });
     }
   }
@@ -261,12 +265,19 @@ exports.getBookingPage = async (req, res, next) => {
 
     // Get today's date for min date validation
     const today = new Date().toISOString().split('T')[0];
+    
+    // Get dates from query params if available
+    const checkIn = req.query.checkIn || '';
+    const checkOut = req.query.checkOut || '';
 
     res.render("store/reserve", {
       home: home,
       pageTitle: "Book " + home.houseName,
       currentPage: "bookings",
-      minDate: today
+      minDate: today,
+      checkIn: checkIn,
+      checkOut: checkOut,
+      pricing: pricingConfig
     });
   } catch (err) {
     console.log("Error loading booking page:", err);
@@ -296,8 +307,9 @@ exports.postCreateBooking = async (req, res, next) => {
     const checkOutDate = new Date(checkOut);
     const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
 
-    // Calculate total price (price per night × number of nights)
-    const totalPrice = nights * home.price;
+    // Calculate total price using pricing config
+    const priceBreakdown = pricingConfig.calculateBookingTotal(home.price, nights);
+    const totalPrice = priceBreakdown.total;
 
     // Create new booking
     const booking = new Booking({
