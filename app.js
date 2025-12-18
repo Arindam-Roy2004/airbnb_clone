@@ -27,15 +27,15 @@ const store = new MongoDbStore({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'my secret',
+  secret: process.env.SESSION_SECRET || 'my secret',
   resave: false,
   saveUninitialized: false,
   store: store,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
     httpOnly: true, // Prevents client-side JS from accessing the cookie
-    secure: false, // Temporarily set to false for testing (Chrome blocks secure cookies on flagged sites)
-    sameSite: 'lax' // Allow cookies on same-site navigation
+    secure: process.env.NODE_ENV === 'production', // true in production, false in development
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // 'none' for cross-site in production
   }
 }));
 // Middleware to check login status from SESSION
