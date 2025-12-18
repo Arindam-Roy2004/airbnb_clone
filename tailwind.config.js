@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./views/**/*.{html,ejs}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        airbnb: '#ff385c',
+        'airbnb-dark': '#d50027',
+      }
+    },
   },
   plugins: [],
 }
