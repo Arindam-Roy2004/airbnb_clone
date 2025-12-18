@@ -1,11 +1,14 @@
 <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
     <!-- Left side - Logo -->
-    <a href="/" class="flex items-center gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false" style="display: block; height: 32px; width: 32px; fill: currentcolor;" class="text-airbnb">
-        <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 3.162.723 4.691l-.018.149-.047.255c-.67 3.164-2.885 5.576-5.803 6.334l-.293.065-.36.063-1.114.15-.369.032c-2.645.15-5.29-.482-7.891-1.866l-.529-.295-.529.295c-2.602 1.384-5.246 2.016-7.891 1.866l-.369-.032-1.114-.15-.36-.063-.293-.065c-2.918-.758-5.133-3.17-5.803-6.334l-.047-.255-.018-.149c-.187-1.529.056-3.1.723-4.691l.145-.353c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C12.537 1.963 13.992 1 16 1zm0 2c-1.239 0-2.053.539-2.987 2.211l-.523 1.008c-1.926 3.776-6.06 12.43-7.031 14.692l-.345.836c-.427 1.071-.573 2.02-.438 2.952l.023.15.034.178c.462 2.1 1.935 3.668 3.821 4.154l.28.06.346.058.811.108.346.03c2.037.116 4.161-.369 6.343-1.423l.521-.266.521.266c2.182 1.054 4.306 1.539 6.343 1.423l.346-.03.811-.108.346-.058.28-.06c1.886-.486 3.359-2.054 3.821-4.154l.034-.178.023-.15c.135-.932-.011-1.881-.438-2.952l-.345-.836c-.971-2.262-5.105-10.916-7.031-14.692l-.523-1.008C18.053 3.539 17.24 3 16 3zm0 5c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 2c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"></path>
-      </svg>
-      <span class="text-airbnb font-bold text-xl hidden md:block">airbnb</span>
+    <a href="/" class="flex items-center gap-2">
+      <div class="bg-airbnb rounded-lg p-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+          <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+          <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+        </svg>
+      </div>
+      <span class="text-airbnb font-bold text-xl hidden md:block">StayEase</span>
     </a>
 
     <!-- Center - Search Bar (Mock) -->
@@ -28,14 +31,14 @@
         <% if(user && user.role === 'host') { %>
           <a href="/host/host-home-list" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Switch to hosting</a>
         <% } else { %>
-           <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Airbnb your home</a>
+           <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">StayEase your home</a>
         <% } %>
       <% } else { %>
-         <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">Airbnb your home</a>
+         <a href="#" class="text-sm font-medium hover:bg-gray-100 px-4 py-2 rounded-full transition">StayEase your home</a>
       <% } %>
 
-      <div class="relative group">
-        <button class="flex items-center gap-2 border border-gray-300 rounded-full p-1 pl-3 hover:shadow-md transition">
+      <div class="relative">
+        <button onclick="toggleDropdown(event)" class="flex items-center gap-2 border border-gray-300 rounded-full p-1 pl-3 hover:shadow-md transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -47,7 +50,7 @@
         </button>
         
         <!-- Dropdown Menu -->
-        <div class="absolute right-0 top-full mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-xl py-2 hidden group-hover:block z-50">
+        <div id="userDropdown" class="absolute right-0 top-full mt-2 w-60 bg-white border border-gray-200 rounded-xl shadow-xl py-2 hidden z-50">
           <% if(isLoggedIn) { %>
             <div class="px-4 py-2 border-b border-gray-100">
               <p class="font-semibold text-sm">Welcome back!</p>
@@ -69,7 +72,7 @@
             <a href="/login" class="block px-4 py-2 text-sm font-semibold hover:bg-gray-100">Log in</a>
             <a href="/signup" class="block px-4 py-2 text-sm hover:bg-gray-100">Sign up</a>
             <div class="border-t border-gray-100 my-1"></div>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Airbnb your home</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">StayEase your home</a>
             <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Help Center</a>
           <% } %>
         </div>
@@ -77,3 +80,19 @@
     </div>
   </nav>
 </header>
+
+<script>
+  function toggleDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('hidden');
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('userDropdown');
+    if (!dropdown.classList.contains('hidden')) {
+      dropdown.classList.add('hidden');
+    }
+  });
+</script>
