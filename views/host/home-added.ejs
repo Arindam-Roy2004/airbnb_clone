@@ -2,11 +2,17 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto mt-8 p-4">
-      <div class="bg-white shadow-md rounded-lg p-6 text-center">
-        <h1 class="text-3xl font-bold text-red-500 mb-4">Home Registered Successfully</h1>
-        <p class="text-lg text-gray-600">Your home has been added to our listings.</p>
-        <a href="/" class="inline-block mt-6 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300">Return to Home</a>
+    <main class="container mx-auto mt-20 p-4 flex justify-center">
+      <div class="bg-white shadow-xl rounded-2xl p-10 text-center max-w-md border border-gray-100">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fa-solid fa-check text-4xl text-green-500"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">Listing Published!</h1>
+        <p class="text-gray-600 mb-8">Your home has been successfully added to StayEase and is now visible to guests.</p>
+        <div class="flex flex-col gap-3">
+          <a href="/host/host-home-list" class="w-full bg-black text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-800 transition duration-300">Manage Listings</a>
+          <a href="/" class="w-full bg-white text-gray-900 border border-gray-300 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition duration-300">Back to Home</a>
+        </div>
       </div>
     </main>
   </body>

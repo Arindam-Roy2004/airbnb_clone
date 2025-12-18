@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <div class="bg-white shadow-lg rounded-lg overflow-slugden">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="bg-gradient-to-r from-green-600 to-green-700 p-6">
         <h1 class="text-3xl font-bold text-white">Complete Your Booking</h1>
         <p class="text-green-100 mt-2">Just a few steps away from your perfect stay</p>
@@ -71,8 +71,8 @@
             >
           </div>
 
-          <!-- Price Breakdown (slugden initially) -->
-          <div id="priceBreakdown" class="slugden bg-gradient-to-br from-green-50 to-blue-50 p-5 rounded-lg border-2 border-green-200 shadow-sm">
+          <!-- Price Breakdown (hidden initially) -->
+          <div id="priceBreakdown" class="hidden bg-gradient-to-br from-green-50 to-blue-50 p-5 rounded-lg border-2 border-green-200 shadow-sm">
             <h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Price Summary</h3>
             <div class="flex justify-between mb-3 text-gray-700">
               <span>₹<%= home.price %> × <span id="nights" class="font-semibold">0</span> nights</span>
@@ -104,7 +104,7 @@
     function calculateTotal() {
       const checkIn = document.getElementById('checkIn').value;
       const checkOut = document.getElementById('checkOut').value;
-      const pricePerNight = <%= home.price %>;
+      const pricePerNight = Number('<%= home.price %>');
       
       if (checkIn && checkOut) {
         const checkInDate = new Date(checkIn);
@@ -116,9 +116,9 @@
           document.getElementById('nights').textContent = nights;
           document.getElementById('totalPrice').textContent = total;
           document.getElementById('totalPrice2').textContent = total;
-          document.getElementById('priceBreakdown').classList.remove('slugden');
+          document.getElementById('priceBreakdown').classList.remove('hidden');
         } else {
-          document.getElementById('priceBreakdown').classList.add('slugden');
+          document.getElementById('priceBreakdown').classList.add('hidden');
         }
       }
     }

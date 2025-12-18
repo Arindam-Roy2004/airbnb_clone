@@ -63,6 +63,8 @@
             <% if(user && user.role === 'host') { %>
               <a href="/host/host-home-list" class="block px-4 py-2 text-sm hover:bg-gray-100">Manage Listings</a>
               <a href="/host/add-home" class="block px-4 py-2 text-sm hover:bg-gray-100">Add a Home</a>
+              <a href="/favourites" class="block px-4 py-2 text-sm hover:bg-gray-100">Favourites</a>
+              <a href="/bookings" class="block px-4 py-2 text-sm hover:bg-gray-100">Bookings</a>
             <% } %>
             <div class="border-t border-gray-100 my-1"></div>
             <form action="/logout" method="POST" class="w-full">

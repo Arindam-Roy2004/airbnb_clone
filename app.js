@@ -80,5 +80,5 @@ mongoose.connect(process.env.MONGODB_URI)
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err);
-    console.error('MONGODB_URI:', process.env.MONGODB_URI ? 'Set (slugden for security)' : 'NOT SET!');
+    console.error('MONGODB_URI:', process.env.MONGODB_URI ? 'Set (hidden for security)' : 'NOT SET!');
   });

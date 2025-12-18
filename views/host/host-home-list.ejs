@@ -32,15 +32,15 @@
                   <span class="text-lg font-bold text-gray-900">₹<%= home.price %></span>
                 </div>
                 <div class="flex items-center gap-1">
-                  <i class="fa-solid fa-star text-yellow-400 text-sm"></i>
-                  <span class="text-gray-700 font-medium"><%= home.rating %></span>
+                  <i class="fa-solid fa-star text-xs"></i>
+                  <span class="text-gray-700 font-medium text-sm"><%= home.rating %></span>
                 </div>
               </div>
 
               <!-- Action Buttons -->
               <div class="flex gap-2">
                 <a href="/host/edit-home/<%= home.slug %>?editing=true" 
-                  class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition">
+                  class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition">
                   <i class="fa-solid fa-pen-to-square mr-2"></i>
                   Edit
                 </a>
