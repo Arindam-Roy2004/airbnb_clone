@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         airbnb: '#ff385c',
         'airbnb-dark': '#d50027',
+      },
+      fontFamily: {
+        sans: ['Circular', '-apple-system', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', 'sans-serif'],
       }
     },
   },
