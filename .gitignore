@@ -6,3 +6,4 @@ data/favourites.json
 .DS_Store
 public/uploads/*
 !public/uploads/.gitkeep
+.vercel

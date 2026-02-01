@@ -13,13 +13,12 @@ const MongoDbStore = require('connect-mongodb-session')(session);
 const storeRouter = require("./routes/storeRouter")
 const hostRouter = require("./routes/hostRouter")
 const authRouter = require("./routes/authRouter");
-const rootDir = require("./utils/pathUtil");
 const errorsController = require("./controllers/errors");
 
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 const store = new MongoDbStore({
   uri: process.env.MONGODB_URI,
   collection: 'sessions'
@@ -59,7 +58,7 @@ app.use("/host", (req, res, next) => {
 });
 app.use("/host", hostRouter);
 
-app.use(express.static(path.join(rootDir, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(errorsController.pageNotFound);
 
@@ -71,14 +70,22 @@ const PORT = process.env.PORT || 3000;
 //   });
 // });
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('✅ MongoDB connected successfully');
-    app.listen(PORT, () => {
-      console.log(`Server running on address http://localhost:${PORT}`);
-    })
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err);
     console.error('MONGODB_URI:', process.env.MONGODB_URI ? 'Set (hidden for security)' : 'NOT SET!');
   });
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on address http://localhost:${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;
