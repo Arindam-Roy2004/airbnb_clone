@@ -2,7 +2,7 @@
 
 A feature-rich Airbnb clone application built with Node.js, Express, MongoDB, and EJS templating engine. This production-ready application includes user authentication, role-based access control, property management, booking system, file uploads, and a modern responsive UI.
 
-**🌐 Live Demo:** [https://airbnb-clone-wc9n.onrender.com](https://airbnb-clone-wc9n.onrender.com)
+**🌐 Live Demo:** [https://airbnb-clone-wc9n.onrender.com](stay-ease-site.vercel.app/)
 
 ## ✨ Features
 
