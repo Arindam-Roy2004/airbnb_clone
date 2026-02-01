@@ -140,16 +140,6 @@ exports.postSignup = [
       return true;
     })
   ,
-  check('terms')
-    .notEmpty()
-    .withMessage('You must accept the terms and conditions')
-    .custom(value => {
-      if (value !== 'on') {
-        throw new Error('You must accept the terms and conditions');
-      }
-      return true;
-    })
-  ,
   (req, res, next) => {
     const { firstName, lastName, email, password, role } = req.body;
     const errors = validationResult(req);
