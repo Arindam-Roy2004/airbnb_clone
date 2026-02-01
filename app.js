@@ -17,6 +17,9 @@ const errorsController = require("./controllers/errors");
 
 const app = express();
 
+// Trust proxy for production (Vercel, Heroku, etc.)
+app.set('trust proxy', 1);
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 const store = new MongoDbStore({
@@ -34,7 +37,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24, // 24 hours in milliseconds
     httpOnly: true, // Prevents client-side JS from accessing the cookie
     secure: process.env.NODE_ENV === 'production', // true in production, false in development
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // 'none' for cross-site in production
+    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax' // 'lax' works better for same-site navigation
   }
 }));
 // Middleware to check login status from SESSION

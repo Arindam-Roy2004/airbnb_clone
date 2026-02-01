@@ -129,19 +129,9 @@ exports.postSignup = [
       return true;
     })
   ,
-  check('role')
-    .optional()
-    .isIn(['host', 'guest'])
-    .withMessage('Role must be either host or guest')
-    .custom((value, { req }) => {
-      if (!value || value.trim() === '') {
-        throw new Error('Please select an account type');
-      }
-      return true;
-    })
-  ,
   (req, res, next) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, password } = req.body;
+    const role = req.body.role || 'guest';
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render("auth/signup", {
@@ -151,15 +141,32 @@ exports.postSignup = [
         oldInput: { firstName, lastName, email, password, role }
       });
     }
-    bcrypt.hash(password, 12)
-    .then(hashPassword=>{
-      const newUser = new User({ firstName, lastName, email, password: hashPassword, role });
-      return newUser.save()
+    
+    // Check if user already exists
+    User.findOne({ email: email })
+    .then(existingUser => {
+      if (existingUser) {
+        return res.status(422).render("auth/signup", {
+          pageTitle: "Signup",
+          currentPage: "signup",
+          errors: ["Email already exists. Please use a different email or login."],
+          oldInput: { firstName, lastName, email, password, role }
+        });
+      }
+      return bcrypt.hash(password, 12);
     })
-    .then(()=>{
-      res.redirect("/login");
+    .then(hashPassword => {
+      if (!hashPassword) return; // User already exists, response already sent
+      const newUser = new User({ firstName, lastName, email, password: hashPassword, role });
+      return newUser.save();
+    })
+    .then((result) => {
+      if (result) {
+        res.redirect("/login");
+      }
     })
     .catch(err=>{
+      console.error("Signup error:", err);
       res.status(422).render("auth/signup", {
         pageTitle: "Signup",
         currentPage: "signup",
