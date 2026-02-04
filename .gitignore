@@ -4,6 +4,7 @@ data/homes.json
 data/favourites.json
 *.log
 .DS_Store
-public/uploads/*
+public/uploads/*.jpeg
 !public/uploads/.gitkeep
+!public/uploads/*.png
 .vercel
