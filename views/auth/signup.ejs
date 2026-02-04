@@ -8,104 +8,118 @@
         <div class="bg-white rounded-xl shadow-xl border border-gray-200 p-8 w-full max-w-xl">
           <!-- Header (more compact) -->
           <div class="text-center mb-6 border-b border-gray-200 pb-4">
-             <h1 class="text-lg font-bold text-gray-800">Sign up</h1>
+            <h1 class="text-lg font-bold text-gray-800">Sign up</h1>
           </div>
 
           <div class="mb-6">
-             <h2 class="text-2xl font-semibold text-gray-800 mb-2">Create your profile</h2>
-             <p class="text-gray-500 text-sm">Join StayEase community of hosts and guests.</p>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-2">Create your profile</h2>
+            <p class="text-gray-500 text-sm">Join StayEase community of hosts and guests.</p>
           </div>
 
           <!-- Signup Form (compact spacing) -->
           <form action="/signup" method="POST" class="space-y-4">
-            
-              <% if(typeof errors !=='undefined' && errors.length> 0){ %>
-                <div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm mb-4">
-                  <ul class="list-disc list-inside">
-                    <% errors.forEach(function(error) { %>
-                      <li><%= error%></li>
+
+            <% if(typeof errors !=='undefined' && errors.length> 0){ %>
+              <div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm mb-4">
+                <ul class="list-disc list-inside">
+                  <% errors.forEach(function(error) { %>
+                    <li>
+                      <%= error%>
+                    </li>
                     <% }); %>
-                  </ul>
-                </div>
+                </ul>
+              </div>
               <% } %>
 
-              <div class="border border-gray-400 rounded-lg overflow-hidden focus-within:border-black focus-within:ring-1 focus-within:ring-black">
+                <div
+                  class="border border-gray-400 rounded-lg overflow-hidden focus-within:border-black focus-within:ring-1 focus-within:ring-black">
                   <!-- First Name -->
                   <div class="px-3 pt-2 border-b border-gray-400">
-                     <label for="firstName" class="block text-xs text-gray-500">First Name</label>
-                     <input
-                       type="text"
-                       id="firstName"
-                       name="firstName"
-                       placeholder="First name"
-                       class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
-                       required
-                     />
+                    <label for="firstName" class="block text-xs text-gray-500">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="First name"
+                      class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
+                      required />
                   </div>
                   <!-- Last Name -->
                   <div class="px-3 pt-2 border-b border-gray-400">
-                     <label for="lastName" class="block text-xs text-gray-500">Last Name</label>
-                     <input
-                       type="text"
-                       id="lastName"
-                       name="lastName"
-                       placeholder="Last name"
-                       class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
-                       required
-                     />
+                    <label for="lastName" class="block text-xs text-gray-500">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last name"
+                      class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
+                      required />
                   </div>
                   <!-- Email -->
                   <div class="px-3 pt-2 border-b border-gray-400">
-                     <label for="email" class="block text-xs text-gray-500">Email</label>
-                     <input
-                       type="email"
-                       id="email"
-                       name="email"
-                       placeholder="Email address"
-                       class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
-                       required
-                     />
+                    <label for="email" class="block text-xs text-gray-500">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email address"
+                      class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
+                      required />
                   </div>
                   <!-- Password -->
                   <div class="px-3 pt-2 border-b border-gray-400">
-                     <label for="password" class="block text-xs text-gray-500">Password</label>
-                     <input
-                       type="password"
-                       id="password"
-                       name="password"
-                       placeholder="Password"
-                       class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
-                       required
-                     />
+                    <label for="password" class="block text-xs text-gray-500">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password"
+                      class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
+                      required />
                   </div>
-                   <!-- Confirm Password -->
-                   <div class="px-3 pt-2">
-                     <label for="confirmPassword" class="block text-xs text-gray-500">Confirm Password</label>
-                     <input
-                       type="password"
-                       id="confirmPassword"
-                       name="confirmPassword"
-                       placeholder="Confirm password"
-                       class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
-                       required
-                     />
+                  <!-- Confirm Password -->
+                  <div class="px-3 pt-2">
+                    <label for="confirmPassword" class="block text-xs text-gray-500">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password"
+                      class="w-full border-none p-0 text-gray-900 placeholder-gray-400 focus:ring-0 sm:text-sm pb-2 outline-none"
+                      required />
                   </div>
-              </div>
+                </div>
 
-              <p class="text-xs text-gray-500 mt-2">
-                 By selecting <strong>Agree and continue</strong>, I agree to StayEase's <a href="#" class="underline text-blue-600">Terms of Service</a>, <a href="#" class="underline text-blue-600">Payments Terms of Service</a>, and <a href="#" class="underline text-blue-600">Nondiscrimination Policy</a> and acknowledge the <a href="#" class="underline text-blue-600">Privacy Policy</a>.
-              </p>
+                <!-- Account Type Selection -->
+                <div class="mt-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-3">I want to:</label>
+                  <div class="flex gap-4">
+                    <label class="flex-1 relative cursor-pointer">
+                      <input type="radio" name="role" value="guest" class="peer sr-only" checked />
+                      <div
+                        class="border-2 border-gray-300 rounded-lg p-4 text-center peer-checked:border-airbnb peer-checked:bg-red-50 transition-all">
+                        <div class="text-2xl mb-2">🏠</div>
+                        <div class="font-semibold text-gray-800">Book stays</div>
+                        <div class="text-xs text-gray-500 mt-1">Find amazing places to stay</div>
+                      </div>
+                    </label>
+                    <label class="flex-1 relative cursor-pointer">
+                      <input type="radio" name="role" value="host" class="peer sr-only" />
+                      <div
+                        class="border-2 border-gray-300 rounded-lg p-4 text-center peer-checked:border-airbnb peer-checked:bg-red-50 transition-all">
+                        <div class="text-2xl mb-2">🔑</div>
+                        <div class="font-semibold text-gray-800">Become a Host</div>
+                        <div class="text-xs text-gray-500 mt-1">Earn money sharing your space</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
 
-              <button
-                type="submit"
-                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-bold text-white bg-airbnb hover:bg-airbnb-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition"
-              >
-                Agree and continue
-              </button>
+                <!-- Terms and Conditions Checkbox -->
+                <div class="mt-4">
+                  <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" name="termsAccepted" id="termsAccepted" required
+                      class="mt-1 w-4 h-4 text-airbnb border-gray-300 rounded focus:ring-airbnb" />
+                    <span class="text-sm text-gray-600">
+                      I agree to StayEase's <a href="#" class="underline text-blue-600 hover:text-blue-800">Terms of
+                        Service</a>,
+                      <a href="#" class="underline text-blue-600 hover:text-blue-800">Payments Terms of Service</a>,
+                      <a href="#" class="underline text-blue-600 hover:text-blue-800">Nondiscrimination Policy</a>
+                      and acknowledge the <a href="#" class="underline text-blue-600 hover:text-blue-800">Privacy
+                        Policy</a>.
+                    </span>
+                  </label>
+                </div>
+
+                <button type="submit"
+                  class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-bold text-white bg-airbnb hover:bg-airbnb-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition mt-4">
+                  Agree and continue
+                </button>
           </form>
-          
+
           <div class="mt-6 text-center">
-             <p class="text-sm text-gray-600">Already have an account? <a href="/login" class="font-semibold text-black underline">Log in</a></p>
+            <p class="text-sm text-gray-600">Already have an account? <a href="/login"
+                class="font-semibold text-black underline">Log in</a></p>
           </div>
         </div>
       </main>
