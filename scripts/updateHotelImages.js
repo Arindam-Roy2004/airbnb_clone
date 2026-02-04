@@ -15,7 +15,18 @@ const hotelImageUpdates = [
     houseName: 'Biva Hotel',
     newPhotoPath: '/uploads/biva_hotel.png'
   },
-  // Add more hotels to update as needed
+  {
+    houseName: 'Bangali mahal',
+    newPhotoPath: '/uploads/beachfront_villa.png'
+  },
+  {
+    houseName: 'Village hostel',
+    newPhotoPath: '/uploads/luxury_mountain_cabin.png'
+  },
+  {
+    houseName: 'namo yatri',
+    newPhotoPath: '/uploads/treehouse_retreat.png'
+  },
 ];
 
 // Sample hotels with beautiful images (for seeding new hotels)
