@@ -7,7 +7,7 @@ const pricingConfig = require("../config/pricing");
 exports.getIndex = async (req, res, next) => {
   console.log("storeController -> session", req.session);
   try {
-    const registeredHomes = await Home.find();
+    const registeredHomes = await Home.find().populate('host', 'firstName lastName');
     res.render("store/index", {
       registeredHomes: registeredHomes,
       pageTitle: "airbnb Home",
@@ -46,7 +46,7 @@ exports.getHomes = async (req, res, next) => {
   //     res.status(500).send("Error loading homes");
   //   });
   try {
-    const registeredHomes = await Home.find();
+    const registeredHomes = await Home.find().populate('host', 'firstName lastName');
     res.render("store/home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Homes List",
@@ -65,7 +65,7 @@ exports.getBookings = async (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  
+
   try {
     const userId = req.session.user._id;
 
@@ -124,7 +124,7 @@ exports.getHomesDetails = async (req, res, next) => {
   const slug = req.params.slug;
 
   try {
-    const home = await Home.findOne({ slug: slug });
+    const home = await Home.findOne({ slug: slug }).populate('host', 'firstName lastName');
     if (!home) {
       return res.status(404).render("404", {
         pageTitle: "Home Not Found",
@@ -155,7 +155,7 @@ exports.getFavouriteList = async (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  
+
   const userId = req.session.user._id;
   // console.log("User ID in favourites:", userId);
   // 
@@ -203,7 +203,7 @@ exports.postFavouriteList = async (req, res, next) => {
       User.favourites.push(homeId);
       await User.save();
     }
-    
+
     return res.redirect("/favourites");
   }
   catch (err) {
@@ -224,11 +224,11 @@ exports.postDeleteFavourite = async (req, res, next) => {
   // res.redirect("/favourites");
   try {
     if (!slug) return res.status(400).send("Home slug is required");
-    
+
     // Find home by slug to get its _id for favourites array
     const home = await Home.findOne({ slug: slug });
     if (!home) return res.status(404).send("Home not found");
-    
+
     const userId = req.session.user._id;
     if (!userId) return res.status(401).send("User not authenticated");
     const User = await user.findById(userId);
@@ -265,7 +265,7 @@ exports.getBookingPage = async (req, res, next) => {
 
     // Get today's date for min date validation
     const today = new Date().toISOString().split('T')[0];
-    
+
     // Get dates from query params if available
     const checkIn = req.query.checkIn || '';
     const checkOut = req.query.checkOut || '';
@@ -291,7 +291,7 @@ exports.postCreateBooking = async (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  
+
   try {
     const { homeId, checkIn, checkOut } = req.body;
     const userId = req.session.user._id;
@@ -346,7 +346,7 @@ exports.postCancelBooking = async (req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login');
   }
-  
+
   try {
     const bookingId = req.params.bookingId;
     const userId = req.session.user._id;

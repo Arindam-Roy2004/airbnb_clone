@@ -17,7 +17,7 @@ exports.getHostHomes = async (req, res, next) => {
   //   res.status(500).send("Error loading homes");
   // });
   try {
-    const registeredHomes = await Home.find();
+    const registeredHomes = await Home.find({ host: req.session.user._id });
     res.render("host/host-home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes List",
@@ -62,7 +62,7 @@ exports.postAddHome = async (req, res, next) => {
 
   const photoPath = '/uploads/' + req.file.filename;
   console.log("file uploaded at:", photoPath);
-  const home = new Home({ houseName, price, location, rating, photoPath, description });
+  const home = new Home({ houseName, price, location, rating, photoPath, description, host: req.session.user._id });
   // home.save()
   //   .then(() => {
   //     console.log("Home added successfully");
@@ -118,6 +118,11 @@ exports.getEditHome = async (req, res, next) => {
       console.log("Home not found for editing");
       return res.redirect("/host/host-home-list");
     }
+    // Verify ownership
+    if (home.host.toString() !== req.session.user._id.toString()) {
+      console.log("Unauthorized: User does not own this home");
+      return res.redirect("/host/host-home-list");
+    }
     console.log("Home found for editing", home);
     res.render("host/edit-home", {
       pageTitle: "Edit Home",
@@ -165,11 +170,16 @@ exports.postEditHome = async (req, res, next) => {
       console.log("Home not found for updating");
       return res.redirect("/host/host-home-list");
     }
-    if(req.file){
+    // Verify ownership
+    if (home.host.toString() !== req.session.user._id.toString()) {
+      console.log("Unauthorized: User does not own this home");
+      return res.redirect("/host/host-home-list");
+    }
+    if (req.file) {
       console.log('New file uploaded for home update');
 
       const oldImagePath = home.photoPath;
-      if(oldImagePath){
+      if (oldImagePath) {
         await deleteImage(oldImagePath);
       }
 
@@ -203,20 +213,25 @@ exports.postDeleteHome = async (req, res, next) => {
   //     console.log("Error deleting home:", err);
   //     res.status(500).send("Error deleting home");
   //   });
-  try{
+  try {
     const home = await Home.findOne({ slug: slug });
-    if(!home){
+    if (!home) {
       console.log("Home not found for deletion");
       return res.redirect("/host/host-home-list");
     }
-    if(home.photoPath){
+    // Verify ownership
+    if (home.host.toString() !== req.session.user._id.toString()) {
+      console.log("Unauthorized: User does not own this home");
+      return res.redirect("/host/host-home-list");
+    }
+    if (home.photoPath) {
       await deleteImage(home.photoPath);
     }
     await Home.findOneAndDelete({ slug: slug });
     console.log("Home deleted successfully");
     res.redirect("/host/host-home-list");
   }
-  catch(err){
+  catch (err) {
     console.log("Error deleting home:", err);
     res.status(500).send("Error deleting home");
   }

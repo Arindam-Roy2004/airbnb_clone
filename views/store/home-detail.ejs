@@ -1,235 +1,254 @@
 <%- include('../partials/head') %>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <main class="container mx-auto px-4 mt-6 pb-20 max-w-6xl">
-      <% if (home) { %>
-        <!-- Title -->
-        <div class="mb-6">
-          <h1 class="text-2xl md:text-3xl font-semibold text-gray-900 mb-2"><%= home.houseName %></h1>
-          <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-700">
-             <div class="flex items-center gap-2">
-                <span class="flex items-center font-medium">
-                  <i class="fa-solid fa-star text-xs mr-1"></i>
-                  <%= home.rating %>
-                </span>
-                <span class="mx-1">·</span>
-                <span class="underline font-medium cursor-pointer">12 reviews</span>
-                <span class="mx-1">·</span>
-                <span class="underline font-medium cursor-pointer"><%= home.location || 'Location unavailable' %></span>
-             </div>
-             <div class="flex gap-4">
-                <button class="flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-lg transition underline font-medium">
-                  <i class="fa-solid fa-arrow-up-from-bracket"></i> Share
-                </button>
-                <button class="flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-lg transition underline font-medium">
-                  <i class="fa-regular fa-heart"></i> Save
-                </button>
-             </div>
-          </div>
-        </div>
+   </head>
 
-        <!-- Image Grid (Mock - using single image for now but styled like grid) -->
-        <div class="relative rounded-xl overflow-hidden aspect-[16/9] md:aspect-[20/9] mb-12 group">
-           <img
-                src="<%= home.photoPath || 'https://via.placeholder.com/800x500?text=No+Image' %>"
-                alt="<%= home.houseName %>"
-                class="w-full h-full object-cover hover:brightness-95 transition duration-500"
-              >
-            <button class="absolute bottom-4 right-4 bg-white border border-black px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition flex items-center gap-2 shadow-sm">
-               <i class="fa-solid fa-grip-vertical"></i> Show all photos
-            </button>
-        </div>
-
-        <!-- Content Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <!-- Left Column: Details -->
-            <div class="md:col-span-2">
-               <div class="border-b border-gray-200 pb-6 mb-6">
-                  <h2 class="text-xl font-semibold mb-1">Entire home hosted by Host</h2>
-                  <p class="text-gray-600">4 guests · 2 bedrooms · 2 beds · 1 bath</p>
-               </div>
-
-               <div class="border-b border-gray-200 pb-6 mb-6 space-y-6">
-                  <div class="flex gap-4">
-                     <i class="fa-solid fa-door-open text-2xl text-gray-700 mt-1"></i>
-                     <div>
-                        <h3 class="font-semibold text-gray-900">Self check-in</h3>
-                        <p class="text-gray-500 text-sm">Check yourself in with the keypad.</p>
+   <body>
+      <%- include('../partials/nav') %>
+         <main class="container mx-auto px-4 mt-6 pb-20 max-w-6xl">
+            <% if (home) { %>
+               <!-- Title -->
+               <div class="mb-6">
+                  <h1 class="text-2xl md:text-3xl font-semibold text-gray-900 mb-2">
+                     <%= home.houseName %>
+                  </h1>
+                  <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-700">
+                     <div class="flex items-center gap-2">
+                        <span class="flex items-center font-medium">
+                           <i class="fa-solid fa-star text-xs mr-1"></i>
+                           <%= home.rating %>
+                        </span>
+                        <span class="mx-1">·</span>
+                        <span class="underline font-medium cursor-pointer">12 reviews</span>
+                        <span class="mx-1">·</span>
+                        <span class="underline font-medium cursor-pointer">
+                           <%= home.location || 'Location unavailable' %>
+                        </span>
                      </div>
-                  </div>
-                  <div class="flex gap-4">
-                     <i class="fa-solid fa-medal text-2xl text-gray-700 mt-1"></i>
-                     <div>
-                        <h3 class="font-semibold text-gray-900">Superhost</h3>
-                        <p class="text-gray-500 text-sm">Superhosts are experienced, highly rated hosts.</p>
-                     </div>
-                  </div>
-                  <div class="flex gap-4">
-                     <i class="fa-solid fa-calendar text-2xl text-gray-700 mt-1"></i>
-                     <div>
-                        <h3 class="font-semibold text-gray-900">Free cancellation for 48 hours</h3>
+                     <div class="flex gap-4">
+                        <button
+                           class="flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-lg transition underline font-medium">
+                           <i class="fa-solid fa-arrow-up-from-bracket"></i> Share
+                        </button>
+                        <button
+                           class="flex items-center gap-2 hover:bg-gray-100 px-3 py-2 rounded-lg transition underline font-medium">
+                           <i class="fa-regular fa-heart"></i> Save
+                        </button>
                      </div>
                   </div>
                </div>
 
-               <div class="border-b border-gray-200 pb-6 mb-6">
-                  <h2 class="text-xl font-semibold mb-4">About this place</h2>
-                  <p class="text-gray-700 leading-relaxed">
-                     Enjoy a stylish experience at this centrally-located place. This unique home offers a perfect blend of comfort and convenience, making it an ideal choice for your stay.
-                  </p>
-               </div>
-            </div>
-
-            <!-- Right Column: Booking Card -->
-            <div class="relative">
-               <div class="sticky top-28 border border-gray-200 rounded-xl shadow-xl p-6 bg-white">
-                  <div class="flex justify-between items-end mb-4">
-                     <div>
-                        <span class="text-2xl font-bold">₹<%= home.price %></span>
-                        <span class="text-gray-600"> night</span>
-                     </div>
-                     <div class="flex items-center gap-1 text-sm">
-                        <i class="fa-solid fa-star text-xs"></i>
-                        <span class="font-medium"><%= home.rating %></span>
-                        <span class="text-gray-500"> · </span>
-                        <span class="text-gray-500 underline">12 reviews</span>
-                     </div>
-                  </div>
-
-                  <div class="border border-gray-400 rounded-lg mb-4 overflow-hidden">
-                     <form action="/homes/<%= home.slug %>/book" method="GET" id="bookingForm">
-                        <div class="grid grid-cols-2 border-b border-gray-400">
-                           <div class="p-3 border-r border-gray-400">
-                              <label for="checkIn" class="text-[10px] font-bold uppercase text-gray-700 block">Check-in</label>
-                              <input type="date" id="checkIn" name="checkIn" min="<%= minDate %>" required class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
-                           </div>
-                           <div class="p-3">
-                              <label for="checkOut" class="text-[10px] font-bold uppercase text-gray-700 block">Checkout</label>
-                              <input type="date" id="checkOut" name="checkOut" min="<%= minDate %>" required class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
-                           </div>
-                        </div>
-                        <div class="p-3">
-                           <div class="text-[10px] font-bold uppercase text-gray-700">Guests</div>
-                           <div class="text-sm">1 guest</div>
-                        </div>
-                     </form>
-                  </div>
-
-                  <button type="submit" form="bookingForm" class="block w-full bg-airbnb hover:bg-airbnb-dark text-white text-center font-semibold py-3 rounded-lg transition mb-4">
-                     Reserve
+               <!-- Image Grid (Mock - using single image for now but styled like grid) -->
+               <div class="relative rounded-xl overflow-hidden aspect-[16/9] md:aspect-[20/9] mb-12 group">
+                  <img src="<%= home.photoPath || 'https://via.placeholder.com/800x500?text=No+Image' %>"
+                     alt="<%= home.houseName %>"
+                     class="w-full h-full object-cover hover:brightness-95 transition duration-500">
+                  <button
+                     class="absolute bottom-4 right-4 bg-white border border-black px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition flex items-center gap-2 shadow-sm">
+                     <i class="fa-solid fa-grip-vertical"></i> Show all photos
                   </button>
+               </div>
 
-                  <p class="text-center text-sm text-gray-500 mb-4">You won't be charged yet</p>
+               <!-- Content Grid -->
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  <!-- Left Column: Details -->
+                  <div class="md:col-span-2">
+                     <div class="border-b border-gray-200 pb-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-1">Entire home hosted by <%= home.host ? home.host.firstName
+                              : 'Unknown Host' %>
+                        </h2>
+                        <p class="text-gray-600">4 guests · 2 bedrooms · 2 beds · 1 bath</p>
+                     </div>
 
-                  <div id="priceBreakdown" class="space-y-3 text-gray-600 hidden">
-                     <div class="flex justify-between">
-                        <span class="underline">₹<%= home.price %> x <span id="nightCount">0</span> nights</span>
-                        <span>₹<span id="basePrice">0</span></span>
-                     </div>
-                     <div class="flex justify-between">
-                        <span class="underline">Cleaning fee</span>
-                        <span>₹<%= pricing.CLEANING_FEE.toLocaleString('en-IN') %></span>
-                     </div>
-                     <div class="flex justify-between">
-                        <span class="underline">Service fee</span>
-                        <span>₹<%= pricing.SERVICE_FEE.toLocaleString('en-IN') %></span>
-                     </div>
-                     <div class="border-t border-gray-200 mt-4 pt-4">
-                        <div class="flex justify-between text-gray-700 mb-2">
-                           <span>Subtotal</span>
-                           <span>₹<span id="subtotalPrice">0</span></span>
+                     <div class="border-b border-gray-200 pb-6 mb-6 space-y-6">
+                        <div class="flex gap-4">
+                           <i class="fa-solid fa-door-open text-2xl text-gray-700 mt-1"></i>
+                           <div>
+                              <h3 class="font-semibold text-gray-900">Self check-in</h3>
+                              <p class="text-gray-500 text-sm">Check yourself in with the keypad.</p>
+                           </div>
                         </div>
-                        <div class="flex justify-between text-gray-700 mb-3">
-                           <span>Taxes (12%)</span>
-                           <span>₹<span id="taxAmount">0</span></span>
+                        <div class="flex gap-4">
+                           <i class="fa-solid fa-medal text-2xl text-gray-700 mt-1"></i>
+                           <div>
+                              <h3 class="font-semibold text-gray-900">Superhost</h3>
+                              <p class="text-gray-500 text-sm">Superhosts are experienced, highly rated hosts.</p>
+                           </div>
                         </div>
-                        <div class="flex justify-between font-bold text-gray-900 text-lg border-t border-gray-200 pt-3">
-                           <span>Total</span>
-                           <span>₹<span id="totalPrice">0</span></span>
+                        <div class="flex gap-4">
+                           <i class="fa-solid fa-calendar text-2xl text-gray-700 mt-1"></i>
+                           <div>
+                              <h3 class="font-semibold text-gray-900">Free cancellation for 48 hours</h3>
+                           </div>
                         </div>
+                     </div>
+
+                     <div class="border-b border-gray-200 pb-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-4">About this place</h2>
+                        <p class="text-gray-700 leading-relaxed">
+                           Enjoy a stylish experience at this centrally-located place. This unique home offers a perfect
+                           blend of comfort and convenience, making it an ideal choice for your stay.
+                        </p>
                      </div>
                   </div>
-                  
-                  <!-- Hidden data for JS -->
-                  <div id="booking-data" data-price="<%= home.price %>" class="hidden"></div>
+
+                  <!-- Right Column: Booking Card -->
+                  <div class="relative">
+                     <div class="sticky top-28 border border-gray-200 rounded-xl shadow-xl p-6 bg-white">
+                        <div class="flex justify-between items-end mb-4">
+                           <div>
+                              <span class="text-2xl font-bold">₹<%= home.price %></span>
+                              <span class="text-gray-600"> night</span>
+                           </div>
+                           <div class="flex items-center gap-1 text-sm">
+                              <i class="fa-solid fa-star text-xs"></i>
+                              <span class="font-medium">
+                                 <%= home.rating %>
+                              </span>
+                              <span class="text-gray-500"> · </span>
+                              <span class="text-gray-500 underline">12 reviews</span>
+                           </div>
+                        </div>
+
+                        <div class="border border-gray-400 rounded-lg mb-4 overflow-hidden">
+                           <form action="/homes/<%= home.slug %>/book" method="GET" id="bookingForm">
+                              <div class="grid grid-cols-2 border-b border-gray-400">
+                                 <div class="p-3 border-r border-gray-400">
+                                    <label for="checkIn"
+                                       class="text-[10px] font-bold uppercase text-gray-700 block">Check-in</label>
+                                    <input type="date" id="checkIn" name="checkIn" min="<%= minDate %>" required
+                                       class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
+                                 </div>
+                                 <div class="p-3">
+                                    <label for="checkOut"
+                                       class="text-[10px] font-bold uppercase text-gray-700 block">Checkout</label>
+                                    <input type="date" id="checkOut" name="checkOut" min="<%= minDate %>" required
+                                       class="w-full text-sm border-none p-0 focus:ring-0 cursor-pointer outline-none">
+                                 </div>
+                              </div>
+                              <div class="p-3">
+                                 <div class="text-[10px] font-bold uppercase text-gray-700">Guests</div>
+                                 <div class="text-sm">1 guest</div>
+                              </div>
+                           </form>
+                        </div>
+
+                        <button type="submit" form="bookingForm"
+                           class="block w-full bg-airbnb hover:bg-airbnb-dark text-white text-center font-semibold py-3 rounded-lg transition mb-4">
+                           Reserve
+                        </button>
+
+                        <p class="text-center text-sm text-gray-500 mb-4">You won't be charged yet</p>
+
+                        <div id="priceBreakdown" class="space-y-3 text-gray-600 hidden">
+                           <div class="flex justify-between">
+                              <span class="underline">₹<%= home.price %> x <span id="nightCount">0</span> nights</span>
+                              <span>₹<span id="basePrice">0</span></span>
+                           </div>
+                           <div class="flex justify-between">
+                              <span class="underline">Cleaning fee</span>
+                              <span>₹<%= pricing.CLEANING_FEE.toLocaleString('en-IN') %></span>
+                           </div>
+                           <div class="flex justify-between">
+                              <span class="underline">Service fee</span>
+                              <span>₹<%= pricing.SERVICE_FEE.toLocaleString('en-IN') %></span>
+                           </div>
+                           <div class="border-t border-gray-200 mt-4 pt-4">
+                              <div class="flex justify-between text-gray-700 mb-2">
+                                 <span>Subtotal</span>
+                                 <span>₹<span id="subtotalPrice">0</span></span>
+                              </div>
+                              <div class="flex justify-between text-gray-700 mb-3">
+                                 <span>Taxes (12%)</span>
+                                 <span>₹<span id="taxAmount">0</span></span>
+                              </div>
+                              <div
+                                 class="flex justify-between font-bold text-gray-900 text-lg border-t border-gray-200 pt-3">
+                                 <span>Total</span>
+                                 <span>₹<span id="totalPrice">0</span></span>
+                              </div>
+                           </div>
+                        </div>
+
+                        <!-- Hidden data for JS -->
+                        <div id="booking-data" data-price="<%= home.price %>" class="hidden"></div>
+                     </div>
+                  </div>
                </div>
-            </div>
-        </div>
-        
-        <script>
-          const checkInInput = document.getElementById('checkIn');
-          const checkOutInput = document.getElementById('checkOut');
-          const priceBreakdown = document.getElementById('priceBreakdown');
-          const nightCountSpan = document.getElementById('nightCount');
-          const basePriceSpan = document.getElementById('basePrice');
-          const totalPriceSpan = document.getElementById('totalPrice');
-          const bookingForm = document.getElementById('bookingForm');
-          const bookingData = document.getElementById('booking-data');
-          
-          const pricePerNight = Number(bookingData.dataset.price);
-          const cleaningFee = <%= pricing.CLEANING_FEE %>;
-          const serviceFee = <%= pricing.SERVICE_FEE %>;
-          const taxRate = <%= pricing.TAX_RATE %>;
 
-          function calculatePrice() {
-             const checkInDate = new Date(checkInInput.value);
-             const checkOutDate = new Date(checkOutInput.value);
+               <script>
+                  const checkInInput = document.getElementById('checkIn');
+                  const checkOutInput = document.getElementById('checkOut');
+                  const priceBreakdown = document.getElementById('priceBreakdown');
+                  const nightCountSpan = document.getElementById('nightCount');
+                  const basePriceSpan = document.getElementById('basePrice');
+                  const totalPriceSpan = document.getElementById('totalPrice');
+                  const bookingForm = document.getElementById('bookingForm');
+                  const bookingData = document.getElementById('booking-data');
 
-             if (checkInInput.value && checkOutInput.value && checkOutDate > checkInDate) {
-                const timeDiff = checkOutDate - checkInDate;
-                const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                
-                if (nights > 0) {
-                   const basePrice = nights * pricePerNight;
-                   const subtotal = basePrice + cleaningFee + serviceFee;
-                   const taxes = Math.round(subtotal * taxRate);
-                   const total = subtotal + taxes;
+                  const pricePerNight = Number(bookingData.dataset.price);
+                  const cleaningFee = <%= pricing.CLEANING_FEE %>;
+                  const serviceFee = <%= pricing.SERVICE_FEE %>;
+                  const taxRate = <%= pricing.TAX_RATE %>;
 
-                   nightCountSpan.textContent = nights;
-                   basePriceSpan.textContent = basePrice.toLocaleString('en-IN');
-                   document.getElementById('subtotalPrice').textContent = subtotal.toLocaleString('en-IN');
-                   document.getElementById('taxAmount').textContent = taxes.toLocaleString('en-IN');
-                   totalPriceSpan.textContent = total.toLocaleString('en-IN');
-                   
-                   priceBreakdown.classList.remove('hidden');
-                } else {
-                   priceBreakdown.classList.add('hidden');
-                }
-             } else {
-                priceBreakdown.classList.add('hidden');
-             }
-          }
+                  function calculatePrice() {
+                     const checkInDate = new Date(checkInInput.value);
+                     const checkOutDate = new Date(checkOutInput.value);
 
-          checkInInput.addEventListener('change', function() {
-             checkOutInput.min = this.value;
-             calculatePrice();
-          });
+                     if (checkInInput.value && checkOutInput.value && checkOutDate > checkInDate) {
+                        const timeDiff = checkOutDate - checkInDate;
+                        const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-          checkOutInput.addEventListener('change', calculatePrice);
+                        if (nights > 0) {
+                           const basePrice = nights * pricePerNight;
+                           const subtotal = basePrice + cleaningFee + serviceFee;
+                           const taxes = Math.round(subtotal * taxRate);
+                           const total = subtotal + taxes;
 
-          bookingForm.addEventListener('submit', function(e) {
-             if (!checkInInput.value || !checkOutInput.value) {
-                e.preventDefault();
-                alert('Please select check-in and check-out dates');
-             }
-          });
-        </script>
-      <% } else { %>
-        <div class="text-center py-16">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-800 mb-3">Home not found</h2>
-          <p class="text-gray-600 mb-6">The property you're looking for doesn't exist or has been removed.</p>
-          <a
-            href="/homes"
-            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-medium transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-          >
-            Browse all homes
-          </a>
-        </div>
-      <% } %>
-    </main>
-  </body>
-</html>
+                           nightCountSpan.textContent = nights;
+                           basePriceSpan.textContent = basePrice.toLocaleString('en-IN');
+                           document.getElementById('subtotalPrice').textContent = subtotal.toLocaleString('en-IN');
+                           document.getElementById('taxAmount').textContent = taxes.toLocaleString('en-IN');
+                           totalPriceSpan.textContent = total.toLocaleString('en-IN');
+
+                           priceBreakdown.classList.remove('hidden');
+                        } else {
+                           priceBreakdown.classList.add('hidden');
+                        }
+                     } else {
+                        priceBreakdown.classList.add('hidden');
+                     }
+                  }
+
+                  checkInInput.addEventListener('change', function () {
+                     checkOutInput.min = this.value;
+                     calculatePrice();
+                  });
+
+                  checkOutInput.addEventListener('change', calculatePrice);
+
+                  bookingForm.addEventListener('submit', function (e) {
+                     if (!checkInInput.value || !checkOutInput.value) {
+                        e.preventDefault();
+                        alert('Please select check-in and check-out dates');
+                     }
+                  });
+               </script>
+               <% } else { %>
+                  <div class="text-center py-16">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-gray-400 mb-4" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                           d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                     </svg>
+                     <h2 class="text-2xl font-bold text-gray-800 mb-3">Home not found</h2>
+                     <p class="text-gray-600 mb-6">The property you're looking for doesn't exist or has been removed.
+                     </p>
+                     <a href="/homes"
+                        class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white font-medium transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+                        Browse all homes
+                     </a>
+                  </div>
+                  <% } %>
+         </main>
+   </body>
+
+   </html>

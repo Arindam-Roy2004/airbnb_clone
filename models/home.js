@@ -61,7 +61,7 @@ const homeSchema = mongoose.Schema(
       type: String,
       unique: true,
       default: () => uuidv4(),
-      index: true 
+      index: true
     },
     houseName: {
       type: String,
@@ -80,7 +80,12 @@ const homeSchema = mongoose.Schema(
       required: true
     },
     photoPath: String,
-    description: String
+    description: String,
+    host: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }
   }
 )
 
@@ -90,4 +95,4 @@ const homeSchema = mongoose.Schema(
 //   next();
 // })
 
-module.exports = mongoose.model('Home',homeSchema);
+module.exports = mongoose.model('Home', homeSchema);
